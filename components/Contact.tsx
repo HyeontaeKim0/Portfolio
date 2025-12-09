@@ -55,7 +55,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-black"
+      className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-white"
     >
       <div className="max-w-7xl mx-auto" ref={ref}>
         <motion.div
@@ -64,11 +64,11 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-blue-600">
             Contact
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-4"></div>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <div className="w-24 h-1 bg-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             프로젝트나 협업에 관심이 있으시다면 언제든지 연락주세요!
           </p>
         </motion.div>
@@ -83,7 +83,7 @@ export default function Contact() {
           >
             <div>
               <h3 className="text-2xl font-semibold mb-4">연락처 정보</h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6 leading-relaxed">
                 새로운 프로젝트나 기회에 대해 이야기하고 싶으시다면 언제든지
                 연락주세요. 가능한 한 빨리 답변드리겠습니다.
               </p>
@@ -91,14 +91,14 @@ export default function Contact() {
 
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
                   <Mail size={20} className="text-white" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Email</p>
+                  <p className="text-sm text-gray-600">Email</p>
                   <a
                     href="mailto:your.email@example.com"
-                    className="text-blue-400 hover:text-blue-300 transition-colors"
+                    className="text-blue-600 hover:text-blue-700 transition-colors"
                   >
                     your.email@example.com
                   </a>
@@ -117,7 +117,7 @@ export default function Contact() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`p-3 border border-gray-700 rounded-lg ${social.color} transition-colors duration-200`}
+                      className={`p-3 border border-gray-300 rounded-lg text-gray-600 ${social.color} transition-colors duration-200`}
                       aria-label={social.label}
                     >
                       <Icon size={20} />
@@ -136,12 +136,12 @@ export default function Contact() {
           >
             <form
               onSubmit={handleSubmit}
-              className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 space-y-6"
+              className="bg-gray-50 border border-gray-200 rounded-lg p-6 space-y-6"
             >
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-gray-300 mb-2"
+                  className="block text-sm font-medium text-gray-700 mb-2"
                 >
                   이름
                 </label>
@@ -152,7 +152,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white transition-colors"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-800 transition-colors"
                   placeholder="이름을 입력하세요"
                 />
               </div>
@@ -160,7 +160,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-300 mb-2"
+                  className="block text-sm font-medium text-gray-700 mb-2"
                 >
                   이메일
                 </label>
@@ -171,7 +171,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white transition-colors"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-800 transition-colors"
                   placeholder="이메일을 입력하세요"
                 />
               </div>
@@ -179,7 +179,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-gray-300 mb-2"
+                  className="block text-sm font-medium text-gray-700 mb-2"
                 >
                   메시지
                 </label>
@@ -190,14 +190,14 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-800 transition-colors resize-none"
                   placeholder="메시지를 입력하세요"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold hover:scale-105 transition-transform duration-200 shadow-lg shadow-blue-500/50 flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center gap-2"
               >
                 <Send size={20} />
                 메시지 보내기
