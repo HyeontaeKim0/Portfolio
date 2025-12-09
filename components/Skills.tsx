@@ -20,7 +20,11 @@ import {
   SiGithub,
   SiVercel,
   SiStyledcomponents,
+  SiNestjs,
+  SiAxios,
 } from "react-icons/si";
+import { SiJest } from "react-icons/si";
+import { SiTestinglibrary } from "react-icons/si";
 import { RiBearSmileLine } from "react-icons/ri";
 import { VscVscode } from "react-icons/vsc";
 
@@ -107,6 +111,13 @@ const skills: Skill[] = [
     icon: SiWebpack,
   },
   {
+    name: "Axios",
+    category: "라이브러리",
+    bgColor: "#5A20CB",
+    textColor: "#FFFFFF",
+    icon: SiAxios,
+  },
+  {
     name: "Chart.js",
     category: "라이브러리",
     bgColor: "#E10098",
@@ -142,6 +153,21 @@ const skills: Skill[] = [
     icon: RiBearSmileLine,
   },
 
+  {
+    name: "Jest",
+    category: "라이브러리",
+    bgColor: "#993399",
+    textColor: "#FFFFFF",
+    icon: SiJest,
+  },
+  {
+    name: "RTL",
+    category: "라이브러리",
+    bgColor: "#ffffff",
+    textColor: "#E535AB",
+    icon: SiTestinglibrary,
+  },
+
   // 환경 및 배포
   {
     name: "VS Code",
@@ -164,9 +190,16 @@ const skills: Skill[] = [
     textColor: "#FFFFFF",
     icon: SiVercel,
   },
+  {
+    name: "Next.js",
+    category: "스터디",
+    bgColor: "#ffffff",
+    textColor: "red",
+    icon: SiNestjs,
+  },
 ];
 
-const categories = ["프론트엔드", "라이브러리", "환경 및 배포"];
+const categories = ["프론트엔드", "라이브러리", "환경 및 배포", "스터디"];
 
 export default function Skills() {
   const ref = useRef(null);
