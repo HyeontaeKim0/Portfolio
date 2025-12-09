@@ -19,6 +19,7 @@ import {
   SiSass,
   SiGithub,
   SiVercel,
+  SiStyledcomponents,
 } from "react-icons/si";
 import { RiBearSmileLine } from "react-icons/ri";
 import { VscVscode } from "react-icons/vsc";
@@ -81,6 +82,13 @@ const skills: Skill[] = [
     bgColor: "#06B6D4",
     textColor: "#FFFFFF",
     icon: SiTailwindcss,
+  },
+  {
+    name: "Styled Components",
+    category: "프론트엔드",
+    bgColor: "#FF6B6B",
+    textColor: "#FFFFFF",
+    icon: SiStyledcomponents,
   },
 
   // 라이브러리
@@ -225,7 +233,7 @@ export default function Skills() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.4, delay: 0.4 }}
-          className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-8 max-w-5xl mx-auto"
+          className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6  max-w-[2000px] w-full mx-auto justify-center"
         >
           {skills.map((skill, index) => {
             const isActive =
@@ -243,7 +251,7 @@ export default function Skills() {
                   duration: 0.3,
                   delay: 0.5 + index * 0.03,
                 }}
-                className={`flex flex-col items-center justify-center cursor-pointer group transition-all duration-300 ${
+                className={`flex mt-7 flex-col items-center justify-center cursor-pointer group transition-all duration-300 ${
                   isActive
                     ? "blur-0 opacity-100"
                     : "blur-sm opacity-30 pointer-events-none"
@@ -257,7 +265,7 @@ export default function Skills() {
                   }}
                 >
                   {skill.icon && typeof skill.icon !== "string" ? (
-                    <skill.icon className="w-10 h-10" />
+                    <skill.icon className="w-12 h-12" />
                   ) : (
                     <span className="text-base font-bold">
                       {typeof skill.icon === "string"
