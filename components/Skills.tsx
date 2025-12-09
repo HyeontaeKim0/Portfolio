@@ -191,7 +191,7 @@ const skills: Skill[] = [
     icon: SiVercel,
   },
   {
-    name: "Next.js",
+    name: "Nest.js",
     category: "스터디",
     bgColor: "#ffffff",
     textColor: "red",
