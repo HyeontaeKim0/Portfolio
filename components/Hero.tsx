@@ -47,18 +47,18 @@ export default function Hero() {
           김현태 입니다.
         </motion.h1>
 
-        <motion.p
+        {/* <motion.p
           variants={itemVariants}
           className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed"
         >
           사용자 경험을 최우선으로 생각하며,
           <br className="hidden md:block" />
           아름답고 기능적인 웹 애플리케이션을 만듭니다.
-        </motion.p>
+        </motion.p> */}
 
         <motion.div
           variants={itemVariants}
-          className="flex flex-wrap items-center justify-center gap-4 mb-16"
+          className="flex flex-wrap items-center justify-center gap-4 mb-16 mt-[120px]"
         >
           <a
             href="#projects"
