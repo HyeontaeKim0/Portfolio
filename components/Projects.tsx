@@ -23,6 +23,20 @@ interface Project {
   liveUrl?: string;
   /** `/public` 기준 경로, 예: `/projects/wincl-monitoring.png` */
   coverImage?: string;
+  /** 여러 장 표시 시 순서대로 모달에 노출. 미지정 시 `coverImage`만 사용 */
+  screenshots?: string[];
+  /** 멀티 스크린샷 배치. mobile=가로 스크롤·세로폰 프레임, desktop=가로 스크롤·와이드, vertical=위에서 아래로 쌓기 */
+  galleryLayout?: "mobile" | "desktop" | "vertical";
+}
+
+function getProjectThumbnail(project: Project): string | undefined {
+  return project.coverImage ?? project.screenshots?.[0];
+}
+
+function getProjectGalleryImages(project: Project): string[] {
+  if (project.screenshots?.length) return project.screenshots;
+  if (project.coverImage) return [project.coverImage];
+  return [];
 }
 
 const projects: Project[] = [
@@ -43,6 +57,7 @@ const projects: Project[] = [
       { name: "i18next", label: "i18next" },
       { name: "Axios", label: "Axios" },
     ],
+    participants: "2명 (FE 2) 1명 (BE 1)",
     details:
       "탄소배출량·ESG 모니터링 SaaS의 프론트엔드를 담당했습니다. 플랜·권한 기반 라우팅, Essential/Pro 차별 대시보드, 배출량 E2E, PAYCO 정기결제, 공급망 관리, 3계층 디자인 시스템, 다국어·AI·온보딩까지 설계·구현했습니다.",
     liveUrl: "https://monitoring.wincl.io/",
@@ -120,9 +135,10 @@ const projects: Project[] = [
       { name: "Azure", label: "Azure SWA / Functions" },
       { name: "GitHub Actions", label: "GitHub Actions" },
     ],
+    participants: "1명 (FE 2) 1명 (BE 1)",
     details:
       "GovFund는 한국 중소기업이 정부지원사업·보조금·인증 등 지원 정보를 한곳에서 보고, 일정·내 프로젝트·경비·문서·리포트까지 관리할 수 있게 만든 웹 기반 통합 대시보드(SaaS)입니다. 공고 탐색, 캘린더, 지도형 뷰, 프로젝트·예산 플래너, 문서 생성, 뉴스·공지, 설정·구독·문의 등 B2B 업무 도구에 가까운 화면을 갖추고 있으며, 실서비스는 Azure Static Web Apps에 배포됩니다.",
-    liveUrl: "https://www.govfund.io/login",
+    liveUrl: "https://www.govfund.io",
     coverImage: "/projects/wincl-govfund.png",
     detailSections: [
       {
@@ -163,6 +179,139 @@ const projects: Project[] = [
     ],
   },
   {
+    title: "KBW 탄소배출 계산기 (Emission Calculator)",
+    description:
+      "탄소배출량 계산 웹 애플리케이션 프론트엔드 전담 — 교통·숙박 기반 산출, 5단계 설문, 다국어·반응형 UI",
+    technologies: [
+      { name: "Next.js", label: "Next.js 13.5.6" },
+      { name: "React.js", label: "React 18" },
+      { name: "typescript", label: "TypeScript" },
+      { name: "tailwind css", label: "Tailwind CSS" },
+      { name: "CSS Modules", label: "CSS Modules" },
+      { name: "Zustand", label: "Zustand" },
+      { name: "i18next", label: "i18next" },
+      { name: "Radix UI", label: "Radix UI" },
+      { name: "ESLint", label: "ESLint" },
+    ],
+    details:
+      "탄소배출량 계산 웹 애플리케이션을 프론트엔드에서 전담 개발하고 사용자 인터페이스를 설계했습니다. 교통수단별 계수·멀티스텝 설문·Zustand 전역 상태·i18next 다국어·Radix UI 접근성 컴포넌트·반응형 UX까지 일관되게 구현했습니다.",
+    participants: "1명 (FE 1)",
+    screenshots: [
+      "/projects/kbw-emission-landing.png",
+      "/projects/kbw-emission-result.png",
+    ],
+
+    detailSections: [
+      {
+        title: "탄소배출량 계산 시스템",
+        items: [
+          "교통수단별 탄소배출 계수 적용 및 계산 알고리즘 구현",
+          "비행기, KTX, 자동차, 택시, 버스, 지하철, 도보 등 7가지 교통수단 지원",
+          "공항 간 거리 계산 및 숙박 일수 기반 탄소배출량 산출",
+        ],
+      },
+      {
+        title: "단계별 설문·상태 관리",
+        items: [
+          "사용자 정보 입력부터 최종 결과까지 5단계 진행 방식 구현",
+          "진행률 표시 바를 통한 사용자 진행 상황 파악",
+          "Zustand를 활용한 전역 상태 관리 및 데이터 플로우 설계",
+        ],
+      },
+      {
+        title: "사용자 인터페이스",
+        items: [
+          "Tailwind CSS와 CSS Modules를 조합한 모던한 UI 디자인",
+          "Radix UI 기반 접근성을 고려한 Select, Slider 컴포넌트 구현",
+          "모바일 친화적인 반응형 웹 디자인 및 사용자 경험 최적화",
+        ],
+      },
+      {
+        title: "다국어 지원",
+        items: [
+          "i18next를 활용한 한국어/영어 다국어 지원",
+          "언어별 동적 텍스트 변경 및 지역화 구현",
+          "사용자 언어 선택에 따른 실시간 인터페이스 전환",
+        ],
+      },
+      {
+        title: "데이터 처리·결과 시각화",
+        items: [
+          "사용자 입력 데이터 검증 및 저장 시스템",
+          "최종 탄소배출량 계산 결과의 직관적 표시",
+          "로딩 애니메이션 및 결과 표시 효과를 통한 사용자 경험 향상",
+        ],
+      },
+      {
+        title: "품질·아키텍처",
+        items: [
+          "TypeScript를 통한 타입 안정성 확보",
+          "Next.js App Router를 활용한 효율적인 페이지 라우팅",
+          "ESLint를 통한 코드 품질 관리 및 유지보수성 향상",
+        ],
+      },
+    ],
+  },
+  {
+    title: "F1(포뮬러원) 대시보드",
+    description:
+      "레이스 일정·결과·챔피언십 순위·뉴스·드라이버 정보를 한 화면에서 보는 대시보드형 웹앱 — 진행형 개인 프로젝트",
+    technologies: [
+      { name: "Next.js", label: "Next.js 14 (App Router)" },
+      { name: "typescript", label: "TypeScript" },
+      { name: "React.js", label: "React 18" },
+      { name: "tailwind css", label: "Tailwind CSS" },
+      { name: "Recharts", label: "Recharts" },
+      { name: "lucide-react", label: "Lucide React" },
+      { name: "react-icons", label: "react-icons" },
+      { name: "rss-parser", label: "rss-parser" },
+      { name: "ESLint", label: "ESLint (eslint-config-next)" },
+    ],
+    details:
+      "포뮬러1 레이스 일정, 최근 경기 결과, 챔피언십 순위(드라이버·컨스트럭터), 최신 뉴스, 드라이버 정보를 한 곳에서 볼 수 있는 대시보드형 웹 애플리케이션입니다. 사용자가 여러 페이지를 헤매지 않고 시즌 흐름을 빠르게 파악하도록 하는 것을 목표로 하며, 현재도 기능을 보강·개선 중인 진행형 프로젝트입니다.",
+    participants: "1명 (개인 프로젝트 · 기획·설계·프론트엔드 전반)",
+    screenshots: [
+      "/projects/f1-dashboard-brand.png",
+      "/projects/f1-dashboard-home.png",
+    ],
+    liveUrl: "https://formula1-dashboard.vercel.app/",
+    galleryLayout: "vertical",
+    detailSections: [
+      {
+        title: "레이스·시즌 정보",
+        items: [
+          "다가오는 레이스 일정, 서킷·국가 플래그 등 시각 요소와 함께 일정 정보를 제공",
+          "최근 레이스 결과를 테이블·탭 등으로 확인할 수 있도록 구성",
+        ],
+      },
+      {
+        title: "순위·드라이버",
+        items: [
+          "드라이버·컨스트럭터 챔피언십 순위를 표시",
+          "홈에는 포디움·드라이버 카드 슬라이더 등 몰입감 있는 섹션을 두어 시즌 하이라이트를 강조",
+        ],
+      },
+      {
+        title: "뉴스",
+        items: [
+          "RSS를 활용해 F1 관련 최신 소식을 대시보드 내에서 확인할 수 있게 구성",
+        ],
+      },
+      {
+        title: "아키텍처·코드 구조",
+        items: [
+          "App Router 기준으로 app/ 라우팅과 components/ 단위 모듈(네비게이션, 레이스 일정·결과, 순위, 뉴스, 드라이버 등)로 역할을 나누어 유지보수와 확장이 쉬운 형태를 지향",
+        ],
+      },
+      {
+        title: "향후 계획 (README 기준)",
+        items: [
+          "다크 모드, 커뮤니티, 위젯 형태 개발 등 기능을 단계적으로 추가할 예정",
+        ],
+      },
+    ],
+  },
+  {
     title: "나의 포트폴리오 사이트",
     description: "Next.js App router 활용하여 웹사이트 개발",
     technologies: [
@@ -176,84 +325,6 @@ const projects: Project[] = [
       "프로젝트 데이터를 분리하여 관리하며 빌드 시점에 렌더링하는 SSG 웹 제작",
     participants: "1명",
     period: "2024.01 ~ 2024.02",
-  },
-  {
-    title: "선언적 Toast 컴포넌트 만들기",
-    description: "코드스테이츠 디자인 시스템 프로젝트 참여",
-    technologies: [
-      { name: "React.js", label: "React.js" },
-      { name: "typescript", label: "typescript" },
-      { name: "Next.js", label: "Next.js" },
-      { name: "Zustand", label: "Zustand" },
-      { name: "Styled-components", label: "Styled-components" },
-      { name: "Storybook", label: "Storybook" },
-    ],
-    details: "Toast 컴포넌트 외에 Icon, Accordion 등 여러 공용 컴포넌트 개발",
-    participants: "3명 (FE 3)",
-    period: "2023.03 ~ 2023.05",
-  },
-  {
-    title: "웹사이트 성능 최적화",
-    description: "코드스테이츠 홈페이지 성능 최적화 작업",
-    technologies: [
-      { name: "React.js", label: "React.js" },
-      { name: "Javascript", label: "Javascript" },
-      { name: "Next.js", label: "Next.js" },
-    ],
-    details: "성능 최적화 사내 스터디 진행 후, 학습 내용을 적용",
-    participants: "5명 (FE 5)",
-    period: "2023.05 ~ 2023.07",
-    detailSections: [
-      {
-        title: "프론트엔드 성능 개선 스터디 진행, 성능 개선 계획 수립",
-        items: [
-          "<프론트엔드 성능 최적화 가이드> 책으로 한 달 동안 업무 외 시간에 스터디 진행",
-          "성능 개선 정도를 확인 할 수 있는 지표 선정 (Chrome LightHouse 점수 선택)",
-          "학습한 내용을 기반으로 현재 홈페이지에서 진행할 수 있는 성능 개선 과제 목록 작성. 이후 스터디원끼리 과제 분담",
-        ],
-      },
-      {
-        title: "성능 개선 작업 진행",
-        items: [
-          "이미지 사이즈 최적화 및 lazy loading 적용",
-          "불필요한 라이브러리 제거 및 코드 스플리팅 적용",
-          "번들 사이즈 감소 및 로딩 속도 개선",
-        ],
-      },
-    ],
-  },
-  {
-    title: "블로그 개발 및 검색엔진 최적화",
-    description: "코드스테이츠 공식 블로그 제작 프로젝트",
-    technologies: [
-      { name: "React.js", label: "React.js" },
-      { name: "typescript", label: "typescript" },
-      { name: "Next.js", label: "Next.js" },
-      { name: "Styled-components", label: "Styled-components" },
-    ],
-    details: "기존에 운영되던 Wordpress 블로그의 데이터를 api로 가져와 연결",
-    participants: "2명 (FE 2)",
-    period: "2023.08 ~ 2023.10",
-  },
-  {
-    title: "로그인 상태 관리 개발",
-    description: "코드스테이츠 통합 로그인 개발 프로젝트",
-    technologies: [
-      { name: "React.js", label: "React.js" },
-      { name: "typescript", label: "typescript" },
-      { name: "Next.js", label: "Next.js" },
-      { name: "Zustand", label: "Zustand" },
-      { name: "Styled-components", label: "Styled-components" },
-      { name: "Jest", label: "Jest" },
-      { name: "React-testing-library", label: "React-testing-library" },
-      { name: "Storybook", label: "Storybook" },
-      { name: "Tanstack-query", label: "Tanstack-query" },
-      { name: "React-hook-form", label: "React-hook-form" },
-    ],
-    details:
-      "통합 로그인 상태 관리와 마이페이지 개발 담당. 유효성 검사 테스트 작성",
-    participants: "3명 (FE 3)",
-    period: "2023.01 ~ 2023.03",
   },
 ];
 
@@ -287,6 +358,9 @@ export default function Projects() {
 
   const selectedProjectData =
     selectedProject !== null ? projects[selectedProject] : null;
+  const selectedProjectGallery = selectedProjectData
+    ? getProjectGalleryImages(selectedProjectData)
+    : [];
 
   return (
     <>
@@ -310,74 +384,85 @@ export default function Projects() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, y: 50 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
-                }
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-blue-500 transition-all duration-300 flex flex-col cursor-pointer shadow-sm"
-                onClick={() => setSelectedProject(index)}
-              >
-                {/* 프로젝트 커버 / 이니셜 */}
-                <div className="relative h-40 bg-blue-50 overflow-hidden shrink-0">
-                  {project.coverImage ? (
-                    <Image
-                      src={project.coverImage}
-                      alt={`${project.title} 서비스 화면`}
-                      fill
-                      className="object-cover object-top"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-3xl font-bold text-blue-200">
-                        {project.title.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-blue-600 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-1">
-                    {project.description}
-                  </p>
-
-                  {/* 기술 스택 */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.slice(0, 3).map((tech) => (
-                      <span
-                        key={tech.name}
-                        className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-gray-700 text-xs"
-                      >
-                        {tech.label}
-                      </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <span className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-gray-700 text-xs">
-                        +{project.technologies.length - 3}
-                      </span>
+            {projects.map((project, index) => {
+              const thumbnail = getProjectThumbnail(project);
+              return (
+                <motion.div
+                  key={project.title}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={
+                    isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
+                  }
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group relative bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-blue-500 transition-all duration-300 flex flex-col cursor-pointer shadow-sm"
+                  onClick={() => setSelectedProject(index)}
+                >
+                  {/* 프로젝트 커버 / 이니셜 */}
+                  <div className="relative h-40 bg-blue-50 overflow-hidden shrink-0">
+                    {thumbnail ? (
+                      <Image
+                        src={thumbnail}
+                        alt={`${project.title} 서비스 화면`}
+                        fill
+                        className="object-cover object-top"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-3xl font-bold text-blue-200">
+                          {project.title.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
                     )}
                   </div>
 
-                  {/* 상세 정보 버튼 */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedProject(index);
-                    }}
-                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors mt-auto pt-4 border-t border-gray-200"
-                  >
-                    <span>주요 업무 내용 보기</span>
-                  </button>
-                </div>
-              </motion.div>
-            ))}
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-blue-600 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-1">
+                      {project.description}
+                    </p>
+
+                    {/* 기술 스택 */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.technologies.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech.name}
+                          className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-gray-700 text-xs"
+                        >
+                          {tech.label}
+                        </span>
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <span className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-gray-700 text-xs">
+                          +{project.technologies.length - 3}
+                        </span>
+                      )}
+                    </div>
+                    {/* 참여 인원 */}
+                    {/* {project.participants && (
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2 ">
+                          참여 인원
+                        </h3>
+                        <p className="text-gray-600">{project.participants}</p>
+                      </div>
+                    )} */}
+                    {/* 상세 정보 버튼 */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedProject(index);
+                      }}
+                      className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors mt-auto pt-4 border-t border-gray-200"
+                    >
+                      <span>주요 업무 내용 보기</span>
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -433,19 +518,61 @@ export default function Projects() {
                     </p>
                   </div>
 
-                  {selectedProjectData.coverImage && (
+                  {selectedProjectGallery.length > 0 && (
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 mb-2">
                         스크린샷
                       </h3>
-                      <div className="relative w-full aspect-video max-h-[min(420px,55vh)] rounded-lg overflow-hidden border border-gray-200 bg-gray-100">
-                        <Image
-                          src={selectedProjectData.coverImage}
-                          alt={`${selectedProjectData.title} 서비스 화면`}
-                          fill
-                          className="object-cover object-top"
-                          sizes="(max-width: 896px) 100vw, 896px"
-                        />
+                      <div
+                        className={
+                          selectedProjectGallery.length > 1
+                            ? selectedProjectData.galleryLayout === "vertical"
+                              ? "flex flex-col gap-4"
+                              : "flex flex-row gap-4 overflow-x-auto pb-2 pt-1 snap-x snap-mandatory [-webkit-overflow-scrolling:touch] md:justify-center"
+                            : "flex flex-col gap-4"
+                        }
+                      >
+                        {selectedProjectGallery.map((src, shotIndex) => {
+                          const isMulti = selectedProjectGallery.length > 1;
+                          const layout =
+                            selectedProjectData.galleryLayout ?? "mobile";
+                          const isDesktopGallery =
+                            isMulti && layout === "desktop";
+                          const isVerticalStack =
+                            isMulti && layout === "vertical";
+                          return (
+                            <div
+                              key={src}
+                              className={
+                                isVerticalStack
+                                  ? "relative w-full aspect-video max-h-[min(420px,55vh)] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm"
+                                  : isMulti
+                                    ? isDesktopGallery
+                                      ? "relative shrink-0 w-[min(92vw,560px)] aspect-video rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm snap-start"
+                                      : "relative shrink-0 w-[clamp(168px,38vw,260px)] aspect-[9/17] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm snap-start"
+                                    : "relative w-full aspect-video max-h-[min(420px,55vh)] rounded-lg overflow-hidden border border-gray-200 bg-gray-100"
+                              }
+                            >
+                              <Image
+                                src={src}
+                                alt={`${selectedProjectData!.title} 서비스 화면 ${shotIndex + 1}`}
+                                fill
+                                className={
+                                  isDesktopGallery || isVerticalStack
+                                    ? "object-cover object-center"
+                                    : "object-cover object-top"
+                                }
+                                sizes={
+                                  isVerticalStack || !isMulti
+                                    ? "(max-width: 896px) 100vw, 896px"
+                                    : isDesktopGallery
+                                      ? "(max-width: 768px) 92vw, 560px"
+                                      : "(max-width: 640px) 38vw, 260px"
+                                }
+                              />
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -508,7 +635,7 @@ export default function Projects() {
                   <div className="grid md:grid-cols-2 gap-4">
                     {selectedProjectData.participants && (
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2 mt-5">
                           참여인원
                         </h3>
                         <p className="text-gray-600">
@@ -531,7 +658,7 @@ export default function Projects() {
                   {/* 상세 내용 */}
                   {selectedProjectData.detailSections && (
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4 mt-5">
                         상세 내용
                       </h3>
                       <div className="space-y-6">
