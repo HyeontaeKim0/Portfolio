@@ -11,10 +11,22 @@ interface ProjectDetail {
   items: string[];
 }
 
+interface ProjectTechnology {
+  name: string;
+  label: string;
+}
+
+interface ProjectTechnologyGroup {
+  title: string;
+  items: ProjectTechnology[];
+}
+
 interface Project {
   title: string;
   description: string;
-  technologies: { name: string; label: string }[];
+  technologies?: ProjectTechnology[];
+  /** 영역별 기술 스택. 지정 시 모달에서 Frontend/Backend 등으로 구분 표시 */
+  technologyGroups?: ProjectTechnologyGroup[];
   details?: string;
   participants?: string;
   period?: string;
@@ -25,8 +37,8 @@ interface Project {
   coverImage?: string;
   /** 여러 장 표시 시 순서대로 모달에 노출. 미지정 시 `coverImage`만 사용 */
   screenshots?: string[];
-  /** 멀티 스크린샷 배치. mobile=가로 스크롤·세로폰 프레임, desktop=가로 스크롤·와이드, vertical=위에서 아래로 쌓기 */
-  galleryLayout?: "mobile" | "desktop" | "vertical";
+  /** 멀티 스크린샷 배치. mobile=가로 스크롤·세로폰, desktop=가로 스크롤·와이드, vertical=세로 쌓기, split=1행 단독 + 2행 2열 */
+  galleryLayout?: "mobile" | "desktop" | "vertical" | "split";
 }
 
 function getProjectThumbnail(project: Project): string | undefined {
@@ -37,6 +49,13 @@ function getProjectGalleryImages(project: Project): string[] {
   if (project.screenshots?.length) return project.screenshots;
   if (project.coverImage) return [project.coverImage];
   return [];
+}
+
+function getProjectTechnologies(project: Project): ProjectTechnology[] {
+  if (project.technologyGroups?.length) {
+    return project.technologyGroups.flatMap((group) => group.items);
+  }
+  return project.technologies ?? [];
 }
 
 const projects: Project[] = [
@@ -253,6 +272,127 @@ const projects: Project[] = [
     ],
   },
   {
+    title: "SOOM",
+    description: "라이프스테이지 기반 익명 커뮤니티 플랫폼",
+    technologyGroups: [
+      {
+        title: "Frontend",
+        items: [
+          { name: "Next.js", label: "Next.js 16 (App Router)" },
+          { name: "React.js", label: "React 19" },
+          { name: "typescript", label: "TypeScript" },
+          { name: "tailwind css", label: "Tailwind CSS 4" },
+          { name: "HeroUI", label: "HeroUI" },
+          { name: "lucide-react", label: "lucide-react" },
+          { name: "Geist", label: "Geist" },
+        ],
+      },
+      {
+        title: "Backend",
+        items: [
+          { name: "Route Handlers", label: "Route Handlers" },
+          {
+            name: "Server Actions",
+            label: "Server Components / Server Actions",
+          },
+        ],
+      },
+      {
+        title: "Database",
+        items: [
+          { name: "PostgreSQL", label: "PostgreSQL 16" },
+          { name: "Prisma", label: "Prisma ORM" },
+        ],
+      },
+      {
+        title: "인증",
+        items: [
+          { name: "NextAuth", label: "NextAuth v5 (Auth.js)" },
+          { name: "Google OAuth", label: "Google OAuth 2.0" },
+          { name: "JWT", label: "JWT 세션" },
+        ],
+      },
+      {
+        title: "인프라",
+        items: [
+          { name: "Docker", label: "Docker Compose (로컬 DB)" },
+          { name: "Vercel", label: "Vercel" },
+        ],
+      },
+      {
+        title: "기타",
+        items: [{ name: "ESLint", label: "ESLint" }],
+      },
+    ],
+    details:
+      " 20~30대들이 익명으로 고민을 나누고 정보를 공유하는 커뮤니티를 먼저 만드는 것을 목표로 합니다. 현재 MVP는 익명 게시판을 중심으로 구현되어 있습니다. 카테고리별 글 목록, 중첩 댓글, 좋아요, 조회수 추적, Google 로그인, 마이페이지(내 글·댓글·좋아요)까지 동작합니다. 커뮤니티에서 쌓인 신뢰와 사용자 이해를 바탕으로, 이후 단계에서 오프라인 모임 기능을 추가해 온라인 공감을 실제 만남으로 이어가는 구조를 지향합니다.",
+    participants: "1명 (개인 프로젝트 · 기획·설계·프론트엔드 전반)",
+    screenshots: [
+      "/projects/soom-logo.png",
+      "/projects/soom-board.png",
+      "/projects/soom-mypage.png",
+    ],
+    liveUrl: "https://soom-psi.vercel.app/",
+    galleryLayout: "split",
+    detailSections: [
+      {
+        title: "익명 커뮤니티 게시판",
+        items: [
+          "카테고리(공지, 자유, 질문, 후기, 정보)별 게시글 목록·필터링",
+          "작성자 익명 닉네임 시스템 (지나가는 숨숨 XXXX — userId 해시 기반)",
+          "게시글·댓글 CRUD, 최대 3 depth 중첩 댓글",
+          "게시글·댓글 좋아요 토글 (트랜잭션 기반 동시성 처리)",
+          "조회수 추적 — 쿠키 기반 익명 viewer ID + 로그인 사용자 중복 방지",
+          "비로그인 사용자도 게시글 열람 가능, 작성·수정은 로그인 필요",
+        ],
+      },
+      {
+        title: "모임 기능",
+        items: [
+          "18개 카테고리(등산, 독서, 러닝, 쿠킹, 여행 등) 모임 목록",
+          "카테고리·태그 필터, 모임 카드 UI(이미지, 일정, 장소, 가격, 호스트 정보)",
+          "4단계 위저드 모임 생성 플로우 (기본정보 → 일정 → 참가조건 → 미리보기)",
+        ],
+      },
+      {
+        title: "인증·마이페이지",
+        items: [
+          "Google SSO 로그인 (NextAuth + Prisma Adapter)",
+          "미들웨어 기반 라우트 보호 (public/private 분기)",
+          "마이페이지: 내가 쓴 글 / 내 댓글 / 좋아요한 글 탭",
+        ],
+      },
+      {
+        title: "UI/UX",
+        items: [
+          "모바일 퍼스트 설계 (하단 탭 네비게이션)",
+          "웜 베이지(#FBF7F3) + 오렌지(#d97b2c) 브랜드 컬러",
+          "데스크탑 사이드바 / 모바일 가로 스크롤 필터 대응",
+        ],
+      },
+      {
+        title: "아키텍처",
+        items: [
+          "Client (RSC + Client Components) → API Route Handlers / Server Actions → Service Layer (boardService, meetingService, profileService) → Prisma ORM → PostgreSQL",
+          "App Router 기반 Server/Client Component 분리",
+          "Service Layer 패턴으로 비즈니스 로직과 API·페이지 계층 분리",
+          "타입 정의(lib/types/), 유틸리티(lib/utils/) 모듈화",
+          "Prisma 싱글톤, $transaction 기반 좋아요·조회수 동시성 처리",
+        ],
+      },
+      {
+        title: "주요 기술적 성과",
+        items: [
+          "NextAuth v5 + Edge 미들웨어 호환 JWT 세션 구성",
+          "self-relation 기반 중첩 댓글 스키마 설계 및 enrichment 로직 구현",
+          "쿠키 + DB 기반 조회수 중복 제거 시스템",
+          "익명 닉네임 생성·표시 일관성 유지",
+          "8회 Prisma 마이그레이션을 통한 점진적 스키마 확장",
+        ],
+      },
+    ],
+  },
+  {
     title: "F1(포뮬러원) 대시보드",
     description:
       "레이스 일정·결과·챔피언십 순위·뉴스·드라이버 정보를 한 화면에서 보는 대시보드형 웹앱 — 진행형 개인 프로젝트",
@@ -379,13 +519,14 @@ export default function Projects() {
               프로젝트 상세
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto mt-4">
-              주요 프로젝트의 세부 사항을 확인해보세요
+              주요 프로젝트의 세부 사항 입니다.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, index) => {
               const thumbnail = getProjectThumbnail(project);
+              const projectTechnologies = getProjectTechnologies(project);
               return (
                 <motion.div
                   key={project.title}
@@ -426,7 +567,7 @@ export default function Projects() {
 
                     {/* 기술 스택 */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {project.technologies.slice(0, 3).map((tech) => (
+                      {projectTechnologies.slice(0, 3).map((tech) => (
                         <span
                           key={tech.name}
                           className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-gray-700 text-xs"
@@ -434,9 +575,9 @@ export default function Projects() {
                           {tech.label}
                         </span>
                       ))}
-                      {project.technologies.length > 3 && (
+                      {projectTechnologies.length > 3 && (
                         <span className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-gray-700 text-xs">
-                          +{project.technologies.length - 3}
+                          +{projectTechnologies.length - 3}
                         </span>
                       )}
                     </div>
@@ -523,6 +664,36 @@ export default function Projects() {
                       <h3 className="text-lg font-semibold text-gray-800 mb-2">
                         스크린샷
                       </h3>
+                      {selectedProjectData.galleryLayout === "split" &&
+                      selectedProjectGallery.length >= 3 ? (
+                        <div className="flex flex-col gap-4">
+                          <div className="relative mx-auto w-full max-w-xs aspect-square rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm">
+                            <Image
+                              src={selectedProjectGallery[0]}
+                              alt={`${selectedProjectData.title} 로고`}
+                              fill
+                              className="object-contain p-6"
+                              sizes="(max-width: 896px) 50vw, 320px"
+                            />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            {selectedProjectGallery.slice(1, 3).map((src) => (
+                              <div
+                                key={src}
+                                className="relative w-full aspect-[9/17] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm"
+                              >
+                                <Image
+                                  src={src}
+                                  alt={`${selectedProjectData.title} 서비스 화면`}
+                                  fill
+                                  className="object-cover object-top"
+                                  sizes="(max-width: 896px) 45vw, 280px"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
                       <div
                         className={
                           selectedProjectGallery.length > 1
@@ -574,6 +745,7 @@ export default function Projects() {
                           );
                         })}
                       </div>
+                      )}
                     </div>
                   )}
 
@@ -619,16 +791,40 @@ export default function Projects() {
                     <h3 className="text-lg font-semibold text-gray-800 mb-3">
                       기술 스택
                     </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedProjectData.technologies.map((tech) => (
-                        <span
-                          key={tech.name}
-                          className="px-3 py-1.5 bg-gray-100 border border-gray-300 rounded text-gray-700 text-sm"
-                        >
-                          {tech.label}
-                        </span>
-                      ))}
-                    </div>
+                    {selectedProjectData.technologyGroups?.length ? (
+                      <div className="space-y-4">
+                        {selectedProjectData.technologyGroups.map((group) => (
+                          <div key={group.title}>
+                            <h4 className="text-sm font-medium text-gray-500 mb-2">
+                              {group.title}
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {group.items.map((tech) => (
+                                <span
+                                  key={`${group.title}-${tech.name}`}
+                                  className="px-3 py-1.5 bg-gray-100 border border-gray-300 rounded text-gray-700 text-sm"
+                                >
+                                  {tech.label}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="flex flex-wrap gap-2">
+                        {getProjectTechnologies(selectedProjectData).map(
+                          (tech) => (
+                            <span
+                              key={tech.name}
+                              className="px-3 py-1.5 bg-gray-100 border border-gray-300 rounded text-gray-700 text-sm"
+                            >
+                              {tech.label}
+                            </span>
+                          ),
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* 참여인원 및 기간 */}

@@ -153,21 +153,6 @@ const skills: Skill[] = [
     icon: RiBearSmileLine,
   },
 
-  {
-    name: "Jest",
-    category: "라이브러리",
-    bgColor: "#993399",
-    textColor: "#FFFFFF",
-    icon: SiJest,
-  },
-  {
-    name: "RTL",
-    category: "라이브러리",
-    bgColor: "#ffffff",
-    textColor: "#E535AB",
-    icon: SiTestinglibrary,
-  },
-
   // 환경 및 배포
   {
     name: "VS Code",
@@ -304,8 +289,8 @@ export default function Skills() {
                       {typeof skill.icon === "string"
                         ? skill.icon
                         : skill.name.length > 8
-                        ? skill.name.substring(0, 8).toUpperCase()
-                        : skill.name.toUpperCase()}
+                          ? skill.name.substring(0, 8).toUpperCase()
+                          : skill.name.toUpperCase()}
                     </span>
                   )}
                 </div>

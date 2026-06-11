@@ -5,6 +5,9 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Code, Coffee, Heart, Rocket } from "lucide-react";
 
+import Image from "next/image";
+import profile from "../assets/User.jpg";
+
 const interests = [
   {
     icon: Code,
@@ -78,11 +81,14 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="relative"
           >
-            <div className="relative w-full h-96 bg-blue-50 rounded-lg border border-blue-200 flex items-center justify-center">
-              <div className="relative z-10 text-center">
-                <div className="text-6xl mb-4">👨‍💻</div>
-                <p className="text-gray-700 text-lg">개발자</p>
-              </div>
+            <div className="flex justify-center items-center">
+              <Image
+                src={profile}
+                alt="profile"
+                width={330}
+                height={330}
+                className="rounded-full"
+              />
             </div>
           </motion.div>
         </div>
