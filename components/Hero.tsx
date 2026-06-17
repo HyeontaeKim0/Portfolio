@@ -79,7 +79,7 @@ export default function Hero() {
           className="flex items-center justify-center gap-6 mb-16"
         >
           <a
-            href="https://github.com"
+            href="https://github.com/HyeontaeKim0"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 border border-gray-300 rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors duration-200 text-gray-600"
@@ -88,7 +88,7 @@ export default function Hero() {
             <Github size={20} />
           </a>
           <a
-            href="https://linkedin.com"
+            href="www.linkedin.com/in/현태-김-8898062ab"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 border border-gray-300 rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors duration-200 text-gray-600"
@@ -96,13 +96,13 @@ export default function Hero() {
           >
             <Linkedin size={20} />
           </a>
-          <a
+          {/* <a
             href="mailto:your.email@example.com"
             className="p-3 border border-gray-300 rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors duration-200 text-gray-600"
             aria-label="Email"
           >
             <Mail size={20} />
-          </a>
+          </a> */}
         </motion.div>
 
         <motion.div
