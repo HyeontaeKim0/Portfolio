@@ -346,14 +346,14 @@ const projects: Project[] = [
           "비로그인 사용자도 게시글 열람 가능, 작성·수정은 로그인 필요",
         ],
       },
-      {
-        title: "모임 기능",
-        items: [
-          "18개 카테고리(등산, 독서, 러닝, 쿠킹, 여행 등) 모임 목록",
-          "카테고리·태그 필터, 모임 카드 UI(이미지, 일정, 장소, 가격, 호스트 정보)",
-          "4단계 위저드 모임 생성 플로우 (기본정보 → 일정 → 참가조건 → 미리보기)",
-        ],
-      },
+      // {
+      //   title: "모임 기능",
+      //   items: [
+      //     "18개 카테고리(등산, 독서, 러닝, 쿠킹, 여행 등) 모임 목록",
+      //     "카테고리·태그 필터, 모임 카드 UI(이미지, 일정, 장소, 가격, 호스트 정보)",
+      //     "4단계 위저드 모임 생성 플로우 (기본정보 → 일정 → 참가조건 → 미리보기)",
+      //   ],
+      // },
       {
         title: "인증·마이페이지",
         items: [
@@ -694,57 +694,57 @@ export default function Projects() {
                           </div>
                         </div>
                       ) : (
-                      <div
-                        className={
-                          selectedProjectGallery.length > 1
-                            ? selectedProjectData.galleryLayout === "vertical"
-                              ? "flex flex-col gap-4"
-                              : "flex flex-row gap-4 overflow-x-auto pb-2 pt-1 snap-x snap-mandatory [-webkit-overflow-scrolling:touch] md:justify-center"
-                            : "flex flex-col gap-4"
-                        }
-                      >
-                        {selectedProjectGallery.map((src, shotIndex) => {
-                          const isMulti = selectedProjectGallery.length > 1;
-                          const layout =
-                            selectedProjectData.galleryLayout ?? "mobile";
-                          const isDesktopGallery =
-                            isMulti && layout === "desktop";
-                          const isVerticalStack =
-                            isMulti && layout === "vertical";
-                          return (
-                            <div
-                              key={src}
-                              className={
-                                isVerticalStack
-                                  ? "relative w-full aspect-video max-h-[min(420px,55vh)] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm"
-                                  : isMulti
-                                    ? isDesktopGallery
-                                      ? "relative shrink-0 w-[min(92vw,560px)] aspect-video rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm snap-start"
-                                      : "relative shrink-0 w-[clamp(168px,38vw,260px)] aspect-[9/17] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm snap-start"
-                                    : "relative w-full aspect-video max-h-[min(420px,55vh)] rounded-lg overflow-hidden border border-gray-200 bg-gray-100"
-                              }
-                            >
-                              <Image
-                                src={src}
-                                alt={`${selectedProjectData!.title} 서비스 화면 ${shotIndex + 1}`}
-                                fill
+                        <div
+                          className={
+                            selectedProjectGallery.length > 1
+                              ? selectedProjectData.galleryLayout === "vertical"
+                                ? "flex flex-col gap-4"
+                                : "flex flex-row gap-4 overflow-x-auto pb-2 pt-1 snap-x snap-mandatory [-webkit-overflow-scrolling:touch] md:justify-center"
+                              : "flex flex-col gap-4"
+                          }
+                        >
+                          {selectedProjectGallery.map((src, shotIndex) => {
+                            const isMulti = selectedProjectGallery.length > 1;
+                            const layout =
+                              selectedProjectData.galleryLayout ?? "mobile";
+                            const isDesktopGallery =
+                              isMulti && layout === "desktop";
+                            const isVerticalStack =
+                              isMulti && layout === "vertical";
+                            return (
+                              <div
+                                key={src}
                                 className={
-                                  isDesktopGallery || isVerticalStack
-                                    ? "object-cover object-center"
-                                    : "object-cover object-top"
+                                  isVerticalStack
+                                    ? "relative w-full aspect-video max-h-[min(420px,55vh)] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm"
+                                    : isMulti
+                                      ? isDesktopGallery
+                                        ? "relative shrink-0 w-[min(92vw,560px)] aspect-video rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm snap-start"
+                                        : "relative shrink-0 w-[clamp(168px,38vw,260px)] aspect-[9/17] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-sm snap-start"
+                                      : "relative w-full aspect-video max-h-[min(420px,55vh)] rounded-lg overflow-hidden border border-gray-200 bg-gray-100"
                                 }
-                                sizes={
-                                  isVerticalStack || !isMulti
-                                    ? "(max-width: 896px) 100vw, 896px"
-                                    : isDesktopGallery
-                                      ? "(max-width: 768px) 92vw, 560px"
-                                      : "(max-width: 640px) 38vw, 260px"
-                                }
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
+                              >
+                                <Image
+                                  src={src}
+                                  alt={`${selectedProjectData!.title} 서비스 화면 ${shotIndex + 1}`}
+                                  fill
+                                  className={
+                                    isDesktopGallery || isVerticalStack
+                                      ? "object-cover object-center"
+                                      : "object-cover object-top"
+                                  }
+                                  sizes={
+                                    isVerticalStack || !isMulti
+                                      ? "(max-width: 896px) 100vw, 896px"
+                                      : isDesktopGallery
+                                        ? "(max-width: 768px) 92vw, 560px"
+                                        : "(max-width: 640px) 38vw, 260px"
+                                  }
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
                       )}
                     </div>
                   )}
