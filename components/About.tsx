@@ -5,9 +5,6 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Briefcase, Code, Coffee, Heart, Rocket } from "lucide-react";
 
-import Image from "next/image";
-import profile from "../assets/User.jpg";
-
 const interests = [
   {
     icon: Code,
@@ -55,7 +52,8 @@ const careers: Career[] = [
       {
         name: "윈클 탄소 모니터링",
         role: "모니터링 차트·카테고리 데이터 입력 페이지 개발, 권한 기반 라우팅·재사용 차트 컴포넌트 구축",
-        stack: "React · Vite · Tailwind CSS · Zustand · React Query · Chart.js · i18next",
+        stack:
+          "React · Vite · Tailwind CSS · Zustand · React Query · Chart.js · i18next",
       },
       {
         name: "탄소배출 계산기",
@@ -126,46 +124,6 @@ export default function About() {
           </h2>
           <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
         </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h3 className="text-3xl font-bold mb-6">안녕하세요!</h3>
-            <p className="text-gray-600 text-lg leading-relaxed mb-4">
-              저는 프론트엔드 개발자로서 사용자 경험을 최우선으로 생각하며,
-              아름답고 기능적인 웹 애플리케이션을 만드는 것을 좋아합니다.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed mb-4">
-              React, Next.js, TypeScript 등의 기술 스택을 활용하여 현대적인 웹
-              애플리케이션을 개발하고 있습니다. 코드의 가독성과 재사용성을
-              중시하며, 지속적인 학습과 성장을 추구합니다.
-            </p>
-            <p className="text-gray-400 text-lg leading-relaxed">
-              새로운 기술을 배우고 도전하는 것을 두려워하지 않으며, 팀과의
-              협업을 통해 더 나은 결과물을 만들어가고 있습니다.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="relative"
-          >
-            <div className="flex justify-center items-center">
-              <Image
-                src={profile}
-                alt="profile"
-                width={330}
-                height={330}
-                className="rounded-full"
-              />
-            </div>
-          </motion.div>
-        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
