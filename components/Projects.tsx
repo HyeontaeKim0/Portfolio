@@ -62,77 +62,86 @@ const projects: Project[] = [
   {
     title: "WinCL Monitoring",
     description:
-      "기업용 탄소·ESG 모니터링 SaaS 프론트엔드 — 대시보드·데이터 입력·결제·공급망 도메인 주도 구축",
+      "기업 탄소배출량 관리 SaaS 프론트엔드 — Scope 1·2·3 시각화·간편 계산기·권한 라우팅·ESG 결재 워크플로우 전담 구축",
     technologies: [
-      { name: "React.js", label: "React" },
-      { name: "typescript", label: "TypeScript" },
+      { name: "React.js", label: "React 18" },
       { name: "Vite", label: "Vite" },
-      { name: "TanStack Query", label: "TanStack Query" },
-      { name: "Zustand", label: "Zustand" },
-      { name: "Chart.js", label: "Chart.js" },
-      { name: "Recharts", label: "Recharts" },
-      { name: "Radix UI", label: "Radix UI" },
+      { name: "JavaScript", label: "JavaScript" },
       { name: "tailwind css", label: "Tailwind CSS" },
+      { name: "Zustand", label: "Zustand" },
+      { name: "TanStack Query", label: "TanStack Query" },
+      { name: "Chart.js", label: "Chart.js" },
+      { name: "React Router", label: "React Router v6" },
+      { name: "Radix UI", label: "Radix UI" },
       { name: "i18next", label: "i18next" },
-      { name: "Axios", label: "Axios" },
+      { name: "CVA", label: "CVA" },
+      { name: "xlsx", label: "@e965/xlsx" },
     ],
-    participants: "2명 (FE 2) 1명 (BE 1)",
+    participants: "3명 (FE 2 · BE 1) · 프론트엔드 전담",
     details:
-      "탄소배출량·ESG 모니터링 SaaS의 프론트엔드를 담당했습니다. 플랜·권한 기반 라우팅, Essential/Pro 차별 대시보드, 배출량 E2E, PAYCO 정기결제, 공급망 관리, 3계층 디자인 시스템, 다국어·AI·온보딩까지 설계·구현했습니다.",
+      "기업 탄소배출량 관리 SaaS의 프론트엔드를 전담했습니다. Chart.js 기반 재사용 차트 라이브러리로 Scope 1·2·3 배출량 시각화 시스템을 구축하고, 연료별 계수 기반 간편 계산기, React Router v6 config 기반 권한 라우팅, Scope 1·2·3 데이터 입력·관리, ESG 거버넌스 결재 워크플로우, TanStack Query·Zustand 상태 설계, Radix UI 디자인 시스템, i18next 3개국어 지원까지 설계·구현했습니다.",
     liveUrl: "https://monitoring.wincl.io/",
     coverImage: "/projects/wincl-monitoring.png",
     detailSections: [
       {
-        title: "라우팅·데이터 레이어",
+        title: "배출량 시각화 차트 시스템 개발",
         items: [
-          "withAuth / allowedPlans(essential·pro) / allowedRoles / wrapWithLayout로 100+ 라우트를 선언형 단일 테이블에 통합, 로그인·구독·역할 3-factor 가드와 자동 리다이렉트",
-          "라우트 정의와 Layout 래핑 분리로 신규 페이지는 import + 메타 한 줄로 반영",
-          "TanStack Query 도메인 API 모듈 20+ 분리, Axios 인스턴스 다중화(인증·업로드·다운로드·일반)로 캐시 키 충돌 제거·토큰 갱신 격리",
+          "Chart.js 기반 재사용 차트 컴포넌트(막대·도넛·라인·수평막대·트리맵) 라이브러리 구축으로 신규 차트 화면 개발 시간 약 30% 단축",
+          "데이터 라벨·목표선(Annotation)·구성비 트리맵 플러그인을 활용한 고도화 시각화 구현",
+          "Scope 1·2·3 배출량의 기업/사업장 단위 시각화 및 월별·연도별 추이, Top 10 배출원, 탄소집약도 분석 화면 개발",
         ],
       },
       {
-        title: "대시보드·시각화·성능",
+        title: "탄소배출량 간편 계산기 개발",
         items: [
-          "Scope 1·2·3을 사업장/법인/법인통합 관점으로 Essential·Pro 차별 대시보드 구현",
-          "Chart.js·Recharts로 Bar·Donut·Line·Top10·Treemap 등 10종+ 커스텀 차트, Zustand로 기간·조직 등 다중 필터 공유",
-          "Google Maps + MarkerClusterer, react-window 가상 스크롤·메모이제이션으로 대량 마커·테이블·초기 렌더 안정화",
+          "Scope 1(고정·이동연소) 25종 이상 연료별 순발열량·탄소배출계수 기반 배출량 계산 알고리즘 구현",
+          "사용량/비용 입력 모드 전환, 연료 검색·추가 기능 등 사용자 입력 유연성 확보",
+          "재무제표(PDF) 업로드 기반 EEIO 산업연관표 배출량 추정 및 Scope별 결과 PDF 리포트 자동 생성",
         ],
       },
       {
-        title: "배출량 플로우·결제·공급망",
+        title: "권한 기반 라우팅 시스템 구축",
         items: [
-          "시설 등록 → 감축 목표 → 입력 → 검증 → 배출 할당 → 매핑·고객사까지 E2E, Excel 업·다운 공통화, jsPDF 리포트",
-          "PAYCO 정기결제·수단 변경·갱신 및 리다이렉트 3종, 실패·만료·미결제 모달 분기",
-          "협력사 ID 기반 동적 라우팅(SCM ↔ ManageClient ↔ Partner/Client), DirectCustomer·매핑·초대 메일",
+          "React Router v6 기반 약 100개 라우트를 config 구조로 일원화하여 관리",
+          "플랜(Essential·Pro·Trial)·역할별 페이지 접근 제어 및 미인증 리다이렉트, 조건부 레이아웃 처리",
+          "IA 개편 시 레거시 경로 자동 리다이렉트로 기존 링크 호환성 유지",
         ],
       },
       {
-        title: "디자인 시스템·품질·배포",
+        title: "Scope 1·2·3 데이터 입력·관리 시스템 개발",
         items: [
-          "ui(Radix) → common → 도메인 3계층, CVA + tailwind-merge + clsx로 variant API, Pagination·Select·TableSelect·DateSelect 등 공용화",
-          "ESLint(Airbnb·hooks·a11y·tailwind·import-sort) + Prettier, Husky + lint-staged, MR 리뷰로 포맷 논의 최소화",
-          "vite-plugin-html로 빌드 타임·캐시 버스트·GTag·MS Clarity 주입, Firebase Hosting 이원화 배포",
+          "카테고리별 배출량 입력 페이지 및 편집 가능한 테이블(EditableTable) 개발",
+          "@e965/xlsx 기반 Excel 양식 다운로드/일괄 업로드 기능으로 대량 데이터 입력 효율화",
+          "Scope 3 Upstream/Downstream 데이터 수집 → 매핑 → 산정 → 검토·결재 워크플로우 구현",
         ],
       },
-      // {
-      //   title: "i18n·AI·온보딩",
-      //   items: [
-      //     "i18next 기반 한국어·영어·태국어 및 언어 감지",
-      //     "WinCL AI·EEIO 연동·useAiHook 기반 배출량 자동 산정 UI, Pro 플랜 신규 유저 대상 10단계 온보딩 튜토리얼",
-      //   ],
-      // },
-      // {
-      //   title: "성과",
-      //   items: [
-      //     "100+ 라우트를 선언형 메타데이터 단일 테이블로 통합 — 플랜·권한 정책 변경 시 한 곳 수정만으로 전 페이지에 반영되어 정책 변경 대응 공수 대폭 단축",
-      //     "TanStack Query를 도메인별 API 모듈 20+개로 분리하고 Axios를 인증·업로드·다운로드·일반으로 다중화 — 캐시 키 충돌 제거, 토큰 갱신 로직을 인증 인스턴스에만 격리해 네트워크 레이어 유지보수성 확보",
-      //     "도메인 단위 Zustand 슬라이스 약 30개로 전역 상태를 기능별 격리 — 리렌더 범위 최소화 및 스토어 의존성 가시화",
-      //     "공용 컴포넌트 3계층(ui → common → 도메인) 재정비 — 신규 페이지 퍼블리싱 공수 체감 약 30% 단축, 디자인 시스템 변경 시 파급 범위 최소화",
-      //     "Husky + lint-staged + GitLab MR 기반 코드 리뷰 정착 — 머지 전 포맷 관련 리뷰 코멘트를 사실상 0건으로 줄여 리뷰어가 비즈니스 로직에 집중할 수 있는 환경 구성",
-      //     "차트·지도·테이블 등에 가상 스크롤·마커 클러스터링·메모이제이션 적용 — 대시보드 초기 렌더링 성능 안정화",
-      //     "다국어(한·영·태) 대응과 온보딩 튜토리얼 구현 — 해외 고객 유입 및 Pro 플랜 신규 가입 전환율 상승에 기여",
-      //   ],
-      // },
+      {
+        title: "ESG 거버넌스 결재 워크플로우 구현",
+        items: [
+          "팀 역할(팀장·팀원)·결재라인(검토자·최종 결재자)·계정 권한을 조합한 동적 권한 판별 로직 설계",
+          "상신·검토·승인 단계별 화면 및 결재함(Approval Inbox) 개발",
+        ],
+      },
+      {
+        title: "상태관리 및 데이터 페칭 구조 설계",
+        items: [
+          "TanStack Query로 서버 상태(캐싱·동기화·무효화) 관리",
+          "Zustand 스토어 30여 개로 클라이언트 전역 상태(필터·토글·날짜·조직 등)를 도메인별로 분리 설계",
+        ],
+      },
+      {
+        title: "UI 컴포넌트 라이브러리 및 디자인 시스템 구축",
+        items: [
+          "Radix UI(Dialog·Select·Tabs 등 18종) 기반 접근성 고려 공통 컴포넌트 개발",
+          "Tailwind CSS + CVA + tailwind-merge로 일관된 스타일 변형 시스템 구성",
+        ],
+      },
+      {
+        title: "다국어(i18n) 지원",
+        items: [
+          "i18next 기반 한국어·영어·태국어 3개 국어 지원 및 언어 자동 감지·전환",
+        ],
+      },
     ],
   },
   {
