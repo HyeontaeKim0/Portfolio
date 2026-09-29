@@ -45,7 +45,7 @@ interface Career {
 const careers: Career[] = [
   {
     company: "윈클(주)",
-    period: "2024.11 ~ 재직중",
+    period: "2024.11 ~ 2026.07",
     current: true,
     position: "프론트엔드 개발",
     projects: [
