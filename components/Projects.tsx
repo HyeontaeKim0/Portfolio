@@ -147,7 +147,8 @@ const projects: Project[] = [
     details:
       "중소기업이 정부지원사업·보조금 정보를 한곳에서 보고 과제·일정까지 관리하는 SaaS입니다. 기획자가 AI로 만든 20개 이상 페이지 규모의 프로토타입에 합류해 타입 정리, 상태 구조 재설계, 테스트 작성을 거쳐 유료 SaaS로 런칭했고, 구독·인증·알림 API까지 직접 개발했습니다.",
     liveUrl: "https://www.govfund.io",
-    coverImage: "/projects/wincl-govfund.png",
+    coverImage: "/projects/wincl-govfund-overview-poster.jpg",
+    screenshots: ["/projects/wincl-govfund-overview.mp4"],
     detailSections: [
       {
         title: "바이브코딩 프로토타입의 실서비스 안정화",
@@ -661,7 +662,7 @@ export default function Projects() {
               className="fixed inset-0 z-50 flex items-center justify-center p-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl isolate">
+              <div className="flex max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl isolate">
                 {/* 모달 헤더 — 스크롤 영역 밖에 두어 본문 이미지와 겹치지 않음 */}
                 <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-white px-6 py-4 shadow-sm">
                   <h2 className="text-2xl font-bold text-gray-800">
@@ -734,6 +735,22 @@ export default function Projects() {
                           }
                         >
                           {selectedProjectGallery.map((src, shotIndex) => {
+                            if (isVideo(src)) {
+                              return (
+                                <video
+                                  key={src}
+                                  src={src}
+                                  poster={selectedProjectData!.coverImage}
+                                  className="w-full h-auto rounded-xl border border-gray-200 bg-white shadow-sm"
+                                  autoPlay
+                                  muted
+                                  loop
+                                  playsInline
+                                  controls
+                                  aria-label={`${selectedProjectData!.title} 시연 영상 ${shotIndex + 1}`}
+                                />
+                              );
+                            }
                             const isMulti = selectedProjectGallery.length > 1;
                             const layout =
                               selectedProjectData.galleryLayout ?? "mobile";
