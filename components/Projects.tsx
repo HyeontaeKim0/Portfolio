@@ -41,6 +41,10 @@ interface Project {
   galleryLayout?: "mobile" | "desktop" | "vertical" | "split";
 }
 
+function isVideo(src: string): boolean {
+  return /\.(mp4|webm)$/i.test(src);
+}
+
 function getProjectThumbnail(project: Project): string | undefined {
   return project.coverImage ?? project.screenshots?.[0];
 }
@@ -62,84 +66,63 @@ const projects: Project[] = [
   {
     title: "WinCL Monitoring",
     description:
-      "기업 탄소배출량 관리 SaaS 프론트엔드 — Scope 1·2·3 시각화·간편 계산기·권한 라우팅·ESG 결재 워크플로우 전담 구축",
+      "기업 탄소배출량 관리 SaaS — Pro 플랜 대시보드 4종과 제품·고객사 배출량 관리 화면 주도 개발",
     technologies: [
       { name: "React.js", label: "React 18" },
       { name: "Vite", label: "Vite" },
       { name: "JavaScript", label: "JavaScript" },
       { name: "tailwind css", label: "Tailwind CSS" },
-      { name: "Zustand", label: "Zustand" },
       { name: "TanStack Query", label: "TanStack Query" },
+      { name: "Zustand", label: "Zustand" },
       { name: "Chart.js", label: "Chart.js" },
-      { name: "React Router", label: "React Router v6" },
-      { name: "Radix UI", label: "Radix UI" },
+      { name: "Radix UI", label: "shadcn/ui (Radix UI)" },
       { name: "i18next", label: "i18next" },
-      { name: "CVA", label: "CVA" },
-      { name: "xlsx", label: "@e965/xlsx" },
     ],
-    participants: "3명 (FE 2 · BE 1) · 프론트엔드 전담",
+    participants: "FE 2 · BE 1 · 디자이너 1 · 기획 1",
     details:
-      "기업 탄소배출량 관리 SaaS의 프론트엔드를 전담했습니다. Chart.js 기반 재사용 차트 라이브러리로 Scope 1·2·3 배출량 시각화 시스템을 구축하고, 연료별 계수 기반 간편 계산기, React Router v6 config 기반 권한 라우팅, Scope 1·2·3 데이터 입력·관리, ESG 거버넌스 결재 워크플로우, TanStack Query·Zustand 상태 설계, Radix UI 디자인 시스템, i18next 3개국어 지원까지 설계·구현했습니다.",
-    liveUrl: "https://monitoring.wincl.io/",
-    coverImage: "/projects/wincl-monitoring.png",
+      "기업의 Scope 1·2·3 탄소배출량을 입력·관리·모니터링하는 B2B SaaS입니다. Pro 플랜의 사업장·법인·Scope 3·법인 전체 대시보드와 제품·고객사 배출량 관리 화면을 주도해 개발했고, 데이터 간편 산정 화면, 플랜별 접근 제어 UI, 한국어·영어·태국어 다국어 적용을 맡았습니다.",
+    coverImage: "/projects/wincl-monitoring-dashboard-poster.jpg",
+    screenshots: ["/projects/wincl-monitoring-dashboard.mp4"],
     detailSections: [
       {
-        title: "배출량 시각화 차트 시스템 개발",
+        title: "Pro 플랜 대시보드 4종 개발",
         items: [
-          "Chart.js 기반 재사용 차트 컴포넌트(막대·도넛·라인·수평막대·트리맵) 라이브러리 구축으로 신규 차트 화면 개발 시간 약 30% 단축",
-          "데이터 라벨·목표선(Annotation)·구성비 트리맵 플러그인을 활용한 고도화 시각화 구현",
-          "Scope 1·2·3 배출량의 기업/사업장 단위 시각화 및 월별·연도별 추이, Top 10 배출원, 탄소집약도 분석 화면 개발",
+          "사업장·법인·Scope 3 법인·법인 전체 대시보드의 차트 대부분을 Chart.js로 직접 구현 (대시보드 차트 파일의 약 2/3 담당)",
+          "배출량 추이, 인벤토리별 배출량 Top 10(월/연 전환), 전년 대비 증감률, 탄소집약도, 동종업종·대표기업 벤치마크",
+          "감축 목표 화면에 1.5도 시나리오 기준 목표 대비 실적 차트 구현",
+          "천 단위 콤마·소수점 셋째 자리 반올림, 0값 제외, 지수 표기 등 배출량 수치 표기 규칙 통일",
         ],
       },
       {
-        title: "탄소배출량 간편 계산기 개발",
+        title: "제품·고객사 배출량 관리 (Scope 3)",
         items: [
-          "Scope 1(고정·이동연소) 25종 이상 연료별 순발열량·탄소배출계수 기반 배출량 계산 알고리즘 구현",
-          "사용량/비용 입력 모드 전환, 연료 검색·추가 기능 등 사용자 입력 유연성 확보",
-          "재무제표(PDF) 업로드 기반 EEIO 산업연관표 배출량 추정 및 Scope별 결과 PDF 리포트 자동 생성",
+          "제품 등록(LCA 제품 검색 연동), 상세·수정·삭제·변경 이력, 제품 매핑 요청 화면 개발",
+          "고객사 실적 관리: 기존·직접 등록 고객사 구분, 법인사업자 조회 API로 고객사 추가, 카테고리별(폐기물·프랜차이즈·투자 등) 입력 테이블",
+          "입력이 2초간 멈추면 자동 저장되도록 구현해 저장 누락 방지",
+          "배출 데이터별 증빙자료 업로드·조회 API 연동",
+          "비대해진 화면 컴포넌트를 테이블·모달 컴포넌트와 포매터·헬퍼 유틸로 분리",
         ],
       },
       {
-        title: "권한 기반 라우팅 시스템 구축",
+        title: "데이터 간편 산정 화면",
         items: [
-          "React Router v6 기반 약 100개 라우트를 config 구조로 일원화하여 관리",
-          "플랜(Essential·Pro·Trial)·역할별 페이지 접근 제어 및 미인증 리다이렉트, 조건부 레이아웃 처리",
-          "IA 개편 시 레거시 경로 자동 리다이렉트로 기존 링크 호환성 유지",
+          "데이터 간편 산정(간편 계산기) 화면 개발",
+          "같은 연료의 중복 입력 방지 및 안내 문구 추가",
+          "EEIO 기반 배출량 추정 화면 UI 개선",
         ],
       },
       {
-        title: "Scope 1·2·3 데이터 입력·관리 시스템 개발",
+        title: "플랜별 접근 제어 UI",
         items: [
-          "카테고리별 배출량 입력 페이지 및 편집 가능한 테이블(EditableTable) 개발",
-          "@e965/xlsx 기반 Excel 양식 다운로드/일괄 업로드 기능으로 대량 데이터 입력 효율화",
-          "Scope 3 Upstream/Downstream 데이터 수집 → 매핑 → 산정 → 검토·결재 워크플로우 구현",
+          "Essential·Plus·Trial 플랜 권한에 따라 대시보드·Scope 3 화면을 블러 처리하고 업그레이드 안내 표시",
         ],
       },
       {
-        title: "ESG 거버넌스 결재 워크플로우 구현",
+        title: "다국어 및 공통 UI",
         items: [
-          "팀 역할(팀장·팀원)·결재라인(검토자·최종 결재자)·계정 권한을 조합한 동적 권한 판별 로직 설계",
-          "상신·검토·승인 단계별 화면 및 결재함(Approval Inbox) 개발",
-        ],
-      },
-      {
-        title: "상태관리 및 데이터 페칭 구조 설계",
-        items: [
-          "TanStack Query로 서버 상태(캐싱·동기화·무효화) 관리",
-          "Zustand 스토어 30여 개로 클라이언트 전역 상태(필터·토글·날짜·조직 등)를 도메인별로 분리 설계",
-        ],
-      },
-      {
-        title: "UI 컴포넌트 라이브러리 및 디자인 시스템 구축",
-        items: [
-          "Radix UI(Dialog·Select·Tabs 등 18종) 기반 접근성 고려 공통 컴포넌트 개발",
-          "Tailwind CSS + CVA + tailwind-merge로 일관된 스타일 변형 시스템 구성",
-        ],
-      },
-      {
-        title: "다국어(i18n) 지원",
-        items: [
-          "i18next 기반 한국어·영어·태국어 3개 국어 지원 및 언어 자동 감지·전환",
+          "대시보드·캘린더·테이블·결제 페이지 등에 한국어·영어·태국어 적용 확대, 첫 진입 시 브라우저 언어를 감지해 전역 언어 설정",
+          "shadcn/ui 기반 사이드바·드롭다운·시트·테이블 컴포넌트 도입 및 커스터마이징, 대시보드 사이드바 간소화와 Scope별 탭 메뉴 구성",
+          "Prettier 포맷터 도입",
         ],
       },
     ],
@@ -147,63 +130,78 @@ const projects: Project[] = [
   {
     title: "WinCL GovFund",
     description:
-      "중소기업용 정부지원·보조금·인증 정보 통합 SaaS — 공고·캘린더·지도·프로젝트·예산·경비·문서·리포트·구독까지 한 화면에서 관리",
+      "중소기업용 정부지원사업 통합 대시보드 SaaS — AI로 만든 프로토타입을 실서비스로 안정화하고 유료 SaaS로 런칭",
     technologies: [
       { name: "React.js", label: "React 19" },
       { name: "typescript", label: "TypeScript" },
-      { name: "Vite", label: "Vite 6" },
+      { name: "Vite", label: "Vite" },
       { name: "tailwind css", label: "Tailwind CSS 4" },
       { name: "React Router", label: "React Router 7" },
       { name: "Recharts", label: "Recharts" },
-      { name: "pdfjs-dist", label: "PDF.js" },
-      { name: "xlsx", label: "SheetJS (xlsx)" },
       { name: "react-joyride", label: "react-joyride" },
-      { name: "ESLint", label: "ESLint" },
       { name: "Vitest", label: "Vitest" },
-      { name: "Azure", label: "Azure SWA / Functions" },
-      { name: "GitHub Actions", label: "GitHub Actions" },
+      { name: "Azure", label: "Azure Functions (Node.js)" },
+      { name: "Upstash Redis", label: "Upstash Redis" },
     ],
-    participants: "1명 (FE 2) 1명 (BE 1)",
+    participants: "FE 1(본인) · BE·LLM 1 · 기획 1(AI 기반 프로토타입 제작)",
     details:
-      "GovFund는 한국 중소기업이 정부지원사업·보조금·인증 등 지원 정보를 한곳에서 보고, 일정·내 프로젝트·경비·문서·리포트까지 관리할 수 있게 만든 웹 기반 통합 대시보드(SaaS)입니다. 공고 탐색, 캘린더, 지도형 뷰, 프로젝트·예산 플래너, 문서 생성, 뉴스·공지, 설정·구독·문의 등 B2B 업무 도구에 가까운 화면을 갖추고 있으며, 실서비스는 Azure Static Web Apps에 배포됩니다.",
+      "중소기업이 정부지원사업·보조금 정보를 한곳에서 보고 과제·일정까지 관리하는 SaaS입니다. 기획자가 AI로 만든 20개 이상 페이지 규모의 프로토타입에 합류해 타입 정리, 상태 구조 재설계, 테스트 작성을 거쳐 유료 SaaS로 런칭했고, 구독·인증·알림 API까지 직접 개발했습니다.",
     liveUrl: "https://www.govfund.io",
     coverImage: "/projects/wincl-govfund.png",
     detailSections: [
       {
-        title: "라우팅·성능",
+        title: "바이브코딩 프로토타입의 실서비스 안정화",
         items: [
-          "로그인·랜딩은 즉시 로드하고, 대시보드·프로그램·캘린더·프로젝트 매니저 등 대부분 페이지는 React.lazy + Suspense로 코드 스플리팅해 초기 번들을 축소",
+          "AI 생성 프로토타입의 타입 정의를 도메인별로 분리하고 공통 컴포넌트를 추출",
+          "회원가입 에러 바운더리 추가, 전체 새로고침을 일으키던 a 태그를 React Router Link로 교체",
+          "화면마다 하드코딩되어 서로 달랐던 사업 건수·예산 수치를 실제 데이터 기준으로 통일",
         ],
       },
       {
-        title: "인증·레이아웃",
+        title: "지원사업 목록 필터 상태 재설계",
         items: [
-          "RequireAuth로 비로그인 사용자를 로그인으로 유도, 공통 Layout 아래에서 앱 본문 구성",
-          "인증·테마 등 전역 관심사는 Context API로 관리",
+          "문제: useMemo 안에서 setState를 호출해 페이지 초기화가 불안정하고, 필터가 URL에 반영되지 않아 새로고침·공유 시 상태가 사라짐",
+          "해결: 필터의 기준을 URL 쿼리로 옮기고 페이지 초기화는 useEffect로 분리. 열람 제한 확인 API는 요청 순번(ref)을 비교해 늦게 도착한 응답을 버려 레이스 컨디션 차단",
+          "결과: 공유·뒤로가기·새로고침 시에도 같은 필터 화면이 그대로 복원됨",
         ],
       },
       {
-        title: "데이터·시각화·문서",
+        title: "공고 데이터 품질 개선 및 단위 테스트",
         items: [
-          "대시보드·인사이트·리포트 등에서 Recharts로 지표·추이 표현",
-          "PDF.js(pdfjs-dist)로 PDF 처리, SheetJS(xlsx)로 스프레드시트 기반 워크플로(경비·데이터 리포트 등) 지원",
-          "react-joyride로 온보딩, API 연동 맥락에서 bcryptjs·JWT 활용",
+          "주소·기관명 문자열로 17개 시도를 판별하는 정규식 기반 지역 추론 로직 설계, 지역 필터를 걸어도 전국 단위 사업은 유지",
+          "신청 URL을 개별 공고와 목록 페이지로 분류하는 로직, 기업마당 유령 공고·마감 공고 필터 구현",
+          "기업마당·NTIS·지방보조금 데이터를 공식 API 연동으로 전환",
+          "Vitest로 지역 추론·URL 분류·마감일 계산 단위 테스트 33개 작성",
         ],
       },
       {
-        title: "제품 기능 범위(프론트)",
+        title: "구독·결제·계정 (화면 + API)",
         items: [
-          "프로그램 목록·매칭, 캘린더, 펀딩 맵, 내 프로젝트·과제, 보조금·인증, 예산 플래너, 경비·문서 생성, 데이터 리포트, 뉴스·공지·가이드, 설정·프로필·요금제·문의·약관 등 다수 화면·폼을 라우트 단위로 관리",
+          "정기결제 기반 구독 해지·재개·무료 플랜 즉시 전환 플로우, 구독 변경 이력, 결제 내역(카드 뒷번호 표시) 개발",
+          "회원 탈퇴 시 계정·설정·이력 데이터를 한 번에 삭제하는 API 구현",
+          "비밀번호 재설정을 임시 비밀번호 발급 방식에서 인증번호 확인 후 새 비밀번호 설정 방식으로 개선",
+          "카카오·네이버 소셜 로그인 연동, 플랜별 기능 제한(열람 횟수·과제 수) 적용",
         ],
       },
-      // {
-      //   title: "품질·백엔드·운영",
-      //   items: [
-      //     "ESLint·Vitest로 품질 도구 구성",
-      //     "백엔드는 Azure Functions v4(Node), Upstash Redis, GitHub Actions CI/CD",
-      //     "dev / prod 브랜치별 배포(dev.govfund.io, www.govfund.io), README 기준 Node 20+, 로컬은 Vite와 Azure Functions Core Tools 병행 실행",
-      //   ],
-      // },
+      {
+        title: "알림 설정",
+        items: [
+          "텔레그램·카카오 알림톡 채널 설정과 알림 범위·마감 기준·빈도 설정 화면 및 API 연동, 구독 상태 변경 알림 추가",
+        ],
+      },
+      {
+        title: "펀딩맵 시각화 가독성 개선",
+        items: [
+          "Canvas 2D 네트워크 뷰에서 겹쳐 읽기 힘들던 예산 라벨을 호버 시 HTML 패널로 옮기고, 건수 배지는 호버·선택한 노드에만 표시. 모바일 레이아웃 재구성",
+        ],
+      },
+      {
+        title: "온보딩 및 로딩 경험",
+        items: [
+          "라우트별 lazy 로딩으로 생기는 로딩 공백을 대시보드·테이블·카드·기본 4종 Skeleton으로 나눠 처리",
+          "react-joyride로 주요 화면별 가이드 투어를 구성하고, MutationObserver로 상세 패널이 열리는 시점에 맞춰 2차 투어 연결",
+        ],
+      },
     ],
   },
   {
@@ -404,7 +402,7 @@ const projects: Project[] = [
   {
     title: "F1(포뮬러원) 대시보드",
     description:
-      "레이스 일정·결과·챔피언십 순위·뉴스·드라이버 정보를 한 화면에서 보는 대시보드형 웹앱 — 진행형 개인 프로젝트",
+      "레이스 일정·결과·챔피언십 순위·뉴스·드라이버 정보를 한 화면에서 보는 대시보드형 웹앱",
     technologies: [
       { name: "Next.js", label: "Next.js 14 (App Router)" },
       { name: "typescript", label: "TypeScript" },
@@ -417,7 +415,7 @@ const projects: Project[] = [
       { name: "ESLint", label: "ESLint (eslint-config-next)" },
     ],
     details:
-      "포뮬러1 레이스 일정, 최근 경기 결과, 챔피언십 순위(드라이버·컨스트럭터), 최신 뉴스, 드라이버 정보를 한 곳에서 볼 수 있는 대시보드형 웹 애플리케이션입니다. 사용자가 여러 페이지를 헤매지 않고 시즌 흐름을 빠르게 파악하도록 하는 것을 목표로 하며, 현재도 기능을 보강·개선 중인 진행형 프로젝트입니다.",
+      "포뮬러1 레이스 일정, 최근 경기 결과, 챔피언십 순위(드라이버·컨스트럭터), 최신 뉴스, 드라이버 정보를 한 곳에서 볼 수 있는 대시보드형 웹 애플리케이션입니다. 사용자가 여러 페이지를 헤매지 않고 시즌 흐름을 빠르게 파악하도록 하는 것을 목표로 합니다.",
     participants: "1명 (개인 프로젝트 · 기획·설계·프론트엔드 전반)",
     screenshots: [
       "/projects/f1-dashboard-brand.png",
@@ -535,6 +533,7 @@ export default function Projects() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, index) => {
               const thumbnail = getProjectThumbnail(project);
+              const previewVideo = project.screenshots?.find(isVideo);
               const projectTechnologies = getProjectTechnologies(project);
               return (
                 <motion.div
@@ -546,10 +545,32 @@ export default function Projects() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="group relative bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-blue-500 transition-all duration-300 flex flex-col cursor-pointer shadow-sm"
                   onClick={() => setSelectedProject(index)}
+                  onMouseEnter={(e) => {
+                    const v = e.currentTarget.querySelector("video");
+                    if (v) v.play().catch(() => {});
+                  }}
+                  onMouseLeave={(e) => {
+                    const v = e.currentTarget.querySelector("video");
+                    if (v) {
+                      v.pause();
+                      v.currentTime = 0;
+                    }
+                  }}
                 >
                   {/* 프로젝트 커버 / 이니셜 */}
                   <div className="relative h-40 bg-blue-50 overflow-hidden shrink-0">
-                    {thumbnail ? (
+                    {previewVideo ? (
+                      <video
+                        src={previewVideo}
+                        poster={thumbnail}
+                        className="absolute inset-0 h-full w-full object-cover object-top"
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        aria-label={`${project.title} 미리보기 영상`}
+                      />
+                    ) : thumbnail ? (
                       <Image
                         src={thumbnail}
                         alt={`${project.title} 서비스 화면`}
@@ -733,23 +754,36 @@ export default function Projects() {
                                       : "relative w-full aspect-video max-h-[min(420px,55vh)] rounded-lg overflow-hidden border border-gray-200 bg-gray-100"
                                 }
                               >
-                                <Image
-                                  src={src}
-                                  alt={`${selectedProjectData!.title} 서비스 화면 ${shotIndex + 1}`}
-                                  fill
-                                  className={
-                                    isDesktopGallery || isVerticalStack
-                                      ? "object-cover object-center"
-                                      : "object-cover object-top"
-                                  }
-                                  sizes={
-                                    isVerticalStack || !isMulti
-                                      ? "(max-width: 896px) 100vw, 896px"
-                                      : isDesktopGallery
-                                        ? "(max-width: 768px) 92vw, 560px"
-                                        : "(max-width: 640px) 38vw, 260px"
-                                  }
-                                />
+                                {isVideo(src) ? (
+                                  <video
+                                    src={src}
+                                    poster={selectedProjectData!.coverImage}
+                                    className="absolute inset-0 h-full w-full object-contain bg-white"
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                    aria-label={`${selectedProjectData!.title} 시연 영상 ${shotIndex + 1}`}
+                                  />
+                                ) : (
+                                  <Image
+                                    src={src}
+                                    alt={`${selectedProjectData!.title} 서비스 화면 ${shotIndex + 1}`}
+                                    fill
+                                    className={
+                                      isDesktopGallery || isVerticalStack
+                                        ? "object-cover object-center"
+                                        : "object-cover object-top"
+                                    }
+                                    sizes={
+                                      isVerticalStack || !isMulti
+                                        ? "(max-width: 896px) 100vw, 896px"
+                                        : isDesktopGallery
+                                          ? "(max-width: 768px) 92vw, 560px"
+                                          : "(max-width: 640px) 38vw, 260px"
+                                    }
+                                  />
+                                )}
                               </div>
                             );
                           })}

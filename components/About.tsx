@@ -46,14 +46,13 @@ const careers: Career[] = [
   {
     company: "윈클(주)",
     period: "2024.11 ~ 2026.07",
-    current: true,
     position: "프론트엔드 개발",
     projects: [
       {
         name: "윈클 탄소 모니터링",
-        role: "모니터링 차트·카테고리 데이터 입력 페이지 개발, 권한 기반 라우팅·재사용 차트 컴포넌트 구축",
+        role: "Pro 플랜 대시보드 4종, 제품·고객사 배출량 관리, 데이터 간편 산정 화면 개발",
         stack:
-          "React · Vite · Tailwind CSS · Zustand · React Query · Chart.js · i18next",
+          "React · Vite · Tailwind CSS · TanStack Query · Zustand · Chart.js · i18next",
       },
       {
         name: "탄소배출 계산기",
@@ -62,8 +61,8 @@ const careers: Career[] = [
       },
       {
         name: "윈클 GovFund",
-        role: "정부지원사업 공고 도메인 UI·화면 설계, 라우트 기반 코드 스플리팅·문서/데이터 중심 화면 구현",
-        stack: "React 19 · TypeScript · Vite · Recharts · PDF.js · xlsx",
+        role: "AI 생성 프로토타입을 실서비스로 안정화, 필터 상태 재설계·데이터 품질 로직과 테스트, 구독·인증·알림 API 개발",
+        stack: "React 19 · TypeScript · Vite · Recharts · Vitest · Azure Functions",
       },
     ],
   },
