@@ -23,6 +23,10 @@ interface ProjectTechnologyGroup {
 
 interface Project {
   title: string;
+  /** 회사 프로젝트 / 개인 프로젝트 구분 배지 */
+  kind?: "company" | "personal";
+  /** 핵심 성과 (카드에는 첫 번째만, 모달에는 최대 3개 강조) */
+  highlights?: string[];
   description: string;
   technologies?: ProjectTechnology[];
   /** 영역별 기술 스택. 지정 시 모달에서 Frontend/Backend 등으로 구분 표시 */
@@ -65,6 +69,12 @@ function getProjectTechnologies(project: Project): ProjectTechnology[] {
 const projects: Project[] = [
   {
     title: "WinCL Monitoring",
+    kind: "company",
+    highlights: [
+      "Pro 플랜 대시보드 4종 주도 개발",
+      "제품·고객사 배출량 관리 + 2초 자동 저장",
+      "한국어·영어·태국어 다국어 적용",
+    ],
     description:
       "기업 탄소배출량 관리 SaaS — Pro 플랜 대시보드 4종과 제품·고객사 배출량 관리 화면 주도 개발",
     technologies: [
@@ -129,6 +139,12 @@ const projects: Project[] = [
   },
   {
     title: "WinCL GovFund",
+    kind: "company",
+    highlights: [
+      "AI 프로토타입 → 유료 SaaS 런칭",
+      "필터 URL 동기화 · 레이스 컨디션 해결",
+      "단위 테스트 33개 · 구독·계정 플로우 개발",
+    ],
     description:
       "중소기업용 정부지원사업 통합 대시보드 SaaS — AI로 만든 프로토타입을 실서비스로 안정화하고 유료 SaaS로 런칭",
     technologies: [
@@ -140,12 +156,10 @@ const projects: Project[] = [
       { name: "Recharts", label: "Recharts" },
       { name: "react-joyride", label: "react-joyride" },
       { name: "Vitest", label: "Vitest" },
-      { name: "Azure", label: "Azure Functions (Node.js)" },
-      { name: "Upstash Redis", label: "Upstash Redis" },
     ],
     participants: "FE 1(본인) · BE·LLM 1 · 기획 1(AI 기반 프로토타입 제작)",
     details:
-      "중소기업이 정부지원사업·보조금 정보를 한곳에서 보고 과제·일정까지 관리하는 SaaS입니다. 기획자가 AI로 만든 20개 이상 페이지 규모의 프로토타입에 합류해 타입 정리, 상태 구조 재설계, 테스트 작성을 거쳐 유료 SaaS로 런칭했고, 구독·인증·알림 API까지 직접 개발했습니다.",
+      "중소기업이 정부지원사업·보조금 정보를 한곳에서 보고 과제·일정까지 관리하는 SaaS입니다. 기획자가 AI로 만든 20개 이상 페이지 규모의 프로토타입에 합류해 타입 정리, 상태 구조 재설계, 테스트 작성을 거쳐 유료 SaaS로 런칭했고, 구독·계정·알림 설정 등 결제와 계정 관련 화면 흐름을 맡았습니다.",
     liveUrl: "https://www.govfund.io",
     coverImage: "/projects/wincl-govfund-overview-poster.jpg",
     screenshots: ["/projects/wincl-govfund-overview.mp4"],
@@ -171,23 +185,29 @@ const projects: Project[] = [
         items: [
           "주소·기관명 문자열로 17개 시도를 판별하는 정규식 기반 지역 추론 로직 설계, 지역 필터를 걸어도 전국 단위 사업은 유지",
           "신청 URL을 개별 공고와 목록 페이지로 분류하는 로직, 기업마당 유령 공고·마감 공고 필터 구현",
-          "기업마당·NTIS·지방보조금 데이터를 공식 API 연동으로 전환",
           "Vitest로 지역 추론·URL 분류·마감일 계산 단위 테스트 33개 작성",
         ],
       },
       {
-        title: "구독·결제·계정 (화면 + API)",
+        title: "공고 데이터 수집 방식 개선",
+        items: [
+          "문제: 기존 HTML 파싱 방식은 사이트 구조가 바뀌면 수집이 깨지고 누락이 생기는 한계가 있음",
+          "해결: 기업마당·NTIS·지방보조금의 공식 API를 신청해 수집 스크립트를 공식 API 연동 방식으로 전환",
+        ],
+      },
+      {
+        title: "구독·결제·계정",
         items: [
           "정기결제 기반 구독 해지·재개·무료 플랜 즉시 전환 플로우, 구독 변경 이력, 결제 내역(카드 뒷번호 표시) 개발",
-          "회원 탈퇴 시 계정·설정·이력 데이터를 한 번에 삭제하는 API 구현",
-          "비밀번호 재설정을 임시 비밀번호 발급 방식에서 인증번호 확인 후 새 비밀번호 설정 방식으로 개선",
+          "회원 탈퇴 플로우(확인 모달, 완료 후 이동) 개발",
+          "비밀번호 재설정 화면을 임시 비밀번호 방식에서 인증번호 확인 후 새 비밀번호 설정 흐름으로 개편",
           "카카오·네이버 소셜 로그인 연동, 플랜별 기능 제한(열람 횟수·과제 수) 적용",
         ],
       },
       {
         title: "알림 설정",
         items: [
-          "텔레그램·카카오 알림톡 채널 설정과 알림 범위·마감 기준·빈도 설정 화면 및 API 연동, 구독 상태 변경 알림 추가",
+          "텔레그램·카카오 알림톡 채널 설정과 알림 범위·마감 기준·빈도 설정 화면 개발 및 API 연동",
         ],
       },
       {
@@ -207,6 +227,12 @@ const projects: Project[] = [
   },
   {
     title: "KBW 탄소배출 계산기 (Emission Calculator)",
+    kind: "company",
+    highlights: [
+      "7가지 교통수단 배출량 계산",
+      "5단계 설문 플로우",
+      "한국어·영어 다국어",
+    ],
     description:
       "탄소배출량 계산 웹 애플리케이션 프론트엔드 전담 — 교통·숙박 기반 산출, 5단계 설문, 다국어·반응형 UI",
     technologies: [
@@ -281,6 +307,12 @@ const projects: Project[] = [
   },
   {
     title: "SOOM",
+    kind: "personal",
+    highlights: [
+      "익명 커뮤니티 MVP 배포",
+      "3단계 중첩 댓글 · 트랜잭션 좋아요",
+      "NextAuth v5 Google 로그인",
+    ],
     description: "라이프스테이지 기반 익명 커뮤니티 플랫폼",
     technologyGroups: [
       {
@@ -402,6 +434,12 @@ const projects: Project[] = [
   },
   {
     title: "F1(포뮬러원) 대시보드",
+    kind: "personal",
+    highlights: [
+      "OpenF1 API 기반 대시보드",
+      "레이스 결과·순위·드라이버 차트",
+      "RSS 뉴스 연동",
+    ],
     description:
       "레이스 일정·결과·챔피언십 순위·뉴스·드라이버 정보를 한 화면에서 보는 대시보드형 웹앱",
     technologies: [
@@ -461,6 +499,7 @@ const projects: Project[] = [
   },
   {
     title: "나의 포트폴리오 사이트",
+    kind: "personal",
     description: "Next.js App router 활용하여 웹사이트 개발",
     technologies: [
       { name: "React.js", label: "React.js" },
@@ -475,6 +514,50 @@ const projects: Project[] = [
     period: "2024.01 ~ 2024.02",
   },
 ];
+
+function KindBadge({ kind }: { kind?: Project["kind"] }) {
+  if (!kind) return null;
+  const isCompany = kind === "company";
+  return (
+    <span
+      className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+        isCompany
+          ? "bg-blue-600 text-white"
+          : "bg-emerald-100 text-emerald-700"
+      }`}
+    >
+      {isCompany ? "회사" : "개인"}
+    </span>
+  );
+}
+
+const STEP_LABELS: Record<string, string> = {
+  "문제": "bg-rose-100 text-rose-700",
+  "해결": "bg-blue-100 text-blue-700",
+  "결과": "bg-emerald-100 text-emerald-700",
+};
+
+function DetailItem({ text }: { text: string }) {
+  const m = text.match(/^(문제|해결|결과)\s*:\s*(.*)$/);
+  if (m) {
+    return (
+      <li className="flex gap-2 leading-relaxed text-gray-700">
+        <span
+          className={`mt-0.5 h-fit shrink-0 rounded px-1.5 py-0.5 text-[11px] font-bold ${STEP_LABELS[m[1]]}`}
+        >
+          {m[1]}
+        </span>
+        <span>{m[2]}</span>
+      </li>
+    );
+  }
+  return (
+    <li className="flex gap-2 leading-relaxed text-gray-700">
+      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
+      <span>{text}</span>
+    </li>
+  );
+}
 
 export default function Projects() {
   const ref = useRef(null);
@@ -527,7 +610,7 @@ export default function Projects() {
               프로젝트 상세
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto mt-4">
-              주요 프로젝트의 세부 사항 입니다.
+              카드에 마우스를 올리면 시연 영상이, 누르면 상세 내용이 열립니다.
             </p>
           </motion.div>
 
@@ -536,6 +619,7 @@ export default function Projects() {
               const thumbnail = getProjectThumbnail(project);
               const previewVideo = project.screenshots?.find(isVideo);
               const projectTechnologies = getProjectTechnologies(project);
+              const keyHighlight = project.highlights?.[0];
               return (
                 <motion.div
                   key={project.title}
@@ -544,7 +628,7 @@ export default function Projects() {
                     isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
                   }
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group relative bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-blue-500 transition-all duration-300 flex flex-col cursor-pointer shadow-sm"
+                  className="group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
                   onClick={() => setSelectedProject(index)}
                   onMouseEnter={(e) => {
                     const v = e.currentTarget.querySelector("video");
@@ -558,8 +642,8 @@ export default function Projects() {
                     }
                   }}
                 >
-                  {/* 프로젝트 커버 / 이니셜 */}
-                  <div className="relative h-40 bg-blue-50 overflow-hidden shrink-0">
+                  {/* 썸네일 */}
+                  <div className="relative aspect-video shrink-0 overflow-hidden bg-blue-50">
                     {previewVideo ? (
                       <video
                         src={previewVideo}
@@ -581,56 +665,52 @@ export default function Projects() {
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-3xl font-bold text-blue-200">
+                        <span className="text-4xl font-bold text-blue-200">
                           {project.title.charAt(0).toUpperCase()}
                         </span>
                       </div>
                     )}
+                    {previewVideo && (
+                      <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white transition-opacity group-hover:opacity-0">
+                        ▶ 시연 영상
+                      </span>
+                    )}
                   </div>
 
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-blue-600 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-1">
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="mb-2 flex items-center gap-2">
+                      <KindBadge kind={project.kind} />
+                      <h3 className="truncate text-lg font-bold text-gray-800 transition-colors group-hover:text-blue-600">
+                        {project.title}
+                      </h3>
+                    </div>
+                    <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-gray-600">
                       {project.description}
                     </p>
+                    {keyHighlight && (
+                      <p className="mb-4 rounded-lg bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700">
+                        {keyHighlight}
+                      </p>
+                    )}
 
-                    {/* 기술 스택 */}
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="mt-auto flex flex-wrap gap-1.5">
                       {projectTechnologies.slice(0, 3).map((tech) => (
                         <span
                           key={tech.name}
-                          className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-gray-700 text-xs"
+                          className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs text-gray-600"
                         >
                           {tech.label}
                         </span>
                       ))}
                       {projectTechnologies.length > 3 && (
-                        <span className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-gray-700 text-xs">
+                        <span className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs text-gray-600">
                           +{projectTechnologies.length - 3}
                         </span>
                       )}
                     </div>
-                    {/* 참여 인원 */}
-                    {/* {project.participants && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2 ">
-                          참여 인원
-                        </h3>
-                        <p className="text-gray-600">{project.participants}</p>
-                      </div>
-                    )} */}
-                    {/* 상세 정보 버튼 */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedProject(index);
-                      }}
-                      className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors mt-auto pt-4 border-t border-gray-200"
-                    >
-                      <span>주요 업무 내용 보기</span>
-                    </button>
+                    <span className="mt-4 border-t border-gray-100 pt-3 text-sm font-medium text-gray-500 transition-colors group-hover:text-blue-600">
+                      상세 보기 →
+                    </span>
                   </div>
                 </motion.div>
               );
@@ -643,7 +723,6 @@ export default function Projects() {
       <AnimatePresence>
         {selectedProjectData && (
           <>
-            {/* 배경 오버레이 */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -653,48 +732,45 @@ export default function Projects() {
               onClick={() => setSelectedProject(null)}
             />
 
-            {/* 모달 컨텐츠 */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4"
-              onClick={(e) => e.stopPropagation()}
+              onClick={() => setSelectedProject(null)}
             >
-              <div className="flex max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl isolate">
-                {/* 모달 헤더 — 스크롤 영역 밖에 두어 본문 이미지와 겹치지 않음 */}
-                <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-white px-6 py-4 shadow-sm">
-                  <h2 className="text-2xl font-bold text-gray-800">
-                    {selectedProjectData.title}
-                  </h2>
+              <div
+                className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl isolate"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* 헤더 */}
+                <div className="flex shrink-0 items-start justify-between gap-4 border-b border-gray-200 bg-white px-6 py-4">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <KindBadge kind={selectedProjectData.kind} />
+                      <h2 className="truncate text-2xl font-bold text-gray-800">
+                        {selectedProjectData.title}
+                      </h2>
+                    </div>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {selectedProjectData.description}
+                    </p>
+                  </div>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    className="shrink-0 rounded-full p-2 transition-colors hover:bg-gray-100"
                     aria-label="닫기"
                   >
                     <X size={24} className="text-gray-600" />
                   </button>
                 </div>
 
-                {/* 모달 바디 — 여기만 스크롤 */}
-                <div className="min-h-0 flex-1 overflow-y-auto p-6 space-y-6">
-                  {/* 프로젝트 설명 */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                      프로젝트 설명
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      {selectedProjectData.details ||
-                        selectedProjectData.description}
-                    </p>
-                  </div>
-
+                {/* 본문 */}
+                <div className="min-h-0 flex-1 overflow-y-auto">
+                  <div className="space-y-8 p-6">
                   {selectedProjectGallery.length > 0 && (
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                        스크린샷
-                      </h3>
                       {selectedProjectData.galleryLayout === "split" &&
                       selectedProjectGallery.length >= 3 ? (
                         <div className="flex flex-col gap-4">
@@ -809,137 +885,164 @@ export default function Projects() {
                     </div>
                   )}
 
-                  {(selectedProjectData.liveUrl ||
-                    selectedProjectData.githubUrl) && (
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                        링크
-                      </h3>
-                      <ul className="space-y-2 text-gray-600">
-                        {selectedProjectData.liveUrl && (
-                          <li>
-                            <span className="text-gray-500 mr-2">서비스</span>
-                            <a
-                              href={selectedProjectData.liveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:underline break-all"
-                            >
-                              {selectedProjectData.liveUrl}
-                            </a>
-                          </li>
-                        )}
-                        {selectedProjectData.githubUrl && (
-                          <li>
-                            <span className="text-gray-500 mr-2">GitHub</span>
-                            <a
-                              href={selectedProjectData.githubUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:underline break-all"
-                            >
-                              {selectedProjectData.githubUrl}
-                            </a>
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                  )}
 
-                  {/* 기술 스택 */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                      기술 스택
-                    </h3>
-                    {selectedProjectData.technologyGroups?.length ? (
-                      <div className="space-y-4">
-                        {selectedProjectData.technologyGroups.map((group) => (
-                          <div key={group.title}>
-                            <h4 className="text-sm font-medium text-gray-500 mb-2">
-                              {group.title}
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {group.items.map((tech) => (
-                                <span
-                                  key={`${group.title}-${tech.name}`}
-                                  className="px-3 py-1.5 bg-gray-100 border border-gray-300 rounded text-gray-700 text-sm"
-                                >
-                                  {tech.label}
-                                </span>
-                              ))}
-                            </div>
+                    {/* 핵심 성과 */}
+                    {!!selectedProjectData.highlights?.length && (
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        {selectedProjectData.highlights.slice(0, 3).map((h, i) => (
+                          <div
+                            key={h}
+                            className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-4"
+                          >
+                            <p className="mb-1 text-xs font-semibold text-blue-500">
+                              핵심 성과 {i + 1}
+                            </p>
+                            <p className="font-bold leading-snug text-gray-800">
+                              {h}
+                            </p>
                           </div>
                         ))}
                       </div>
-                    ) : (
-                      <div className="flex flex-wrap gap-2">
-                        {getProjectTechnologies(selectedProjectData).map(
-                          (tech) => (
-                            <span
-                              key={tech.name}
-                              className="px-3 py-1.5 bg-gray-100 border border-gray-300 rounded text-gray-700 text-sm"
-                            >
-                              {tech.label}
-                            </span>
-                          ),
+                    )}
+
+                    {/* 설명 + 요약 정보 */}
+                    <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
+                      <div>
+                        <h3 className="mb-2 text-lg font-semibold text-gray-800">
+                          프로젝트 설명
+                        </h3>
+                        <p className="leading-relaxed text-gray-700">
+                          {selectedProjectData.details ||
+                            selectedProjectData.description}
+                        </p>
+                      </div>
+
+                      <aside className="space-y-4 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm">
+                        {selectedProjectData.participants && (
+                          <div>
+                            <p className="mb-1 text-xs font-semibold text-gray-500">
+                              참여 인원
+                            </p>
+                            <p className="text-gray-800">
+                              {selectedProjectData.participants}
+                            </p>
+                          </div>
                         )}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* 참여인원 및 기간 */}
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {selectedProjectData.participants && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2 mt-5">
-                          참여인원
-                        </h3>
-                        <p className="text-gray-600">
-                          {selectedProjectData.participants}
-                        </p>
-                      </div>
-                    )}
-                    {selectedProjectData.period && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                          기간
-                        </h3>
-                        <p className="text-gray-600">
-                          {selectedProjectData.period}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* 상세 내용 */}
-                  {selectedProjectData.detailSections && (
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4 mt-5">
-                        상세 내용
-                      </h3>
-                      <div className="space-y-6">
-                        {selectedProjectData.detailSections.map(
-                          (section, index) => (
-                            <div key={index}>
-                              <h4 className="text-base font-medium text-gray-800 mb-3">
-                                {index + 1}. {section.title}
-                              </h4>
-                              <ul className="space-y-2 ml-4">
-                                {section.items.map((item, itemIndex) => (
-                                  <li
-                                    key={itemIndex}
-                                    className="text-gray-600 leading-relaxed list-disc"
-                                  >
-                                    {item}
-                                  </li>
-                                ))}
-                              </ul>
+                        {selectedProjectData.period && (
+                          <div>
+                            <p className="mb-1 text-xs font-semibold text-gray-500">
+                              기간
+                            </p>
+                            <p className="text-gray-800">
+                              {selectedProjectData.period}
+                            </p>
+                          </div>
+                        )}
+                        {(selectedProjectData.liveUrl ||
+                          selectedProjectData.githubUrl) && (
+                          <div>
+                            <p className="mb-1 text-xs font-semibold text-gray-500">
+                              링크
+                            </p>
+                            <div className="flex flex-col gap-1">
+                              {selectedProjectData.liveUrl && (
+                                <a
+                                  href={selectedProjectData.liveUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="break-all text-blue-600 hover:underline"
+                                >
+                                  서비스 바로가기 ↗
+                                </a>
+                              )}
+                              {selectedProjectData.githubUrl && (
+                                <a
+                                  href={selectedProjectData.githubUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="break-all text-blue-600 hover:underline"
+                                >
+                                  GitHub ↗
+                                </a>
+                              )}
                             </div>
-                          ),
+                          </div>
                         )}
-                      </div>
+                        <div>
+                          <p className="mb-2 text-xs font-semibold text-gray-500">
+                            기술 스택
+                          </p>
+                          {selectedProjectData.technologyGroups?.length ? (
+                            <div className="space-y-2">
+                              {selectedProjectData.technologyGroups.map(
+                                (group) => (
+                                  <div key={group.title}>
+                                    <p className="mb-1 text-[11px] text-gray-400">
+                                      {group.title}
+                                    </p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      {group.items.map((tech) => (
+                                        <span
+                                          key={`${group.title}-${tech.name}`}
+                                          className="rounded border border-gray-200 bg-white px-2 py-0.5 text-xs text-gray-700"
+                                        >
+                                          {tech.label}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ),
+                              )}
+                            </div>
+                          ) : (
+                            <div className="flex flex-wrap gap-1.5">
+                              {getProjectTechnologies(selectedProjectData).map(
+                                (tech) => (
+                                  <span
+                                    key={tech.name}
+                                    className="rounded border border-gray-200 bg-white px-2 py-0.5 text-xs text-gray-700"
+                                  >
+                                    {tech.label}
+                                  </span>
+                                ),
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </aside>
                     </div>
-                  )}
+
+                    {/* 상세 내용 */}
+                    {selectedProjectData.detailSections && (
+                      <div>
+                        <h3 className="mb-4 text-lg font-semibold text-gray-800">
+                          주요 업무
+                        </h3>
+                        <div className="grid gap-4 md:grid-cols-2">
+                          {selectedProjectData.detailSections.map(
+                            (section, index) => (
+                              <div
+                                key={section.title}
+                                className="rounded-xl border border-gray-200 p-5 transition-colors hover:border-blue-200"
+                              >
+                                <h4 className="mb-3 flex items-center gap-2 font-semibold text-gray-800">
+                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
+                                    {index + 1}
+                                  </span>
+                                  {section.title}
+                                </h4>
+                                <ul className="space-y-2 text-sm">
+                                  {section.items.map((item) => (
+                                    <DetailItem key={item} text={item} />
+                                  ))}
+                                </ul>
+                              </div>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>

@@ -61,8 +61,8 @@ const careers: Career[] = [
       },
       {
         name: "윈클 GovFund",
-        role: "AI 생성 프로토타입을 실서비스로 안정화, 필터 상태 재설계·데이터 품질 로직과 테스트, 구독·인증·알림 API 개발",
-        stack: "React 19 · TypeScript · Vite · Recharts · Vitest · Azure Functions",
+        role: "AI 생성 프로토타입을 실서비스로 안정화, 필터 상태 재설계·데이터 품질 로직과 테스트, 구독·계정·알림 설정 화면 개발",
+        stack: "React 19 · TypeScript · Vite · Recharts · Vitest",
       },
     ],
   },
