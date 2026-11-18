@@ -31,27 +31,41 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/90 backdrop-blur-md shadow-lg" : "bg-transparent"
+        isScrolled
+          ? "border-b border-gray-900/10 bg-[#f4f5f7]/85 backdrop-blur-md"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <a href="#home" className="text-2xl font-bold text-blue-600">
-            Portfolio
+          <a
+            href="#home"
+            className="flex items-center gap-2 font-display text-lg font-bold tracking-tight text-gray-900"
+          >
+            <span className="inline-block size-3 rounded-sm bg-blue-600" />
+            HYEONTAE KIM
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-gray-600 hover:text-blue-600 transition-colors duration-200 relative group"
+                className="relative font-display text-sm font-medium uppercase tracking-wide text-gray-600 transition-colors duration-200 hover:text-gray-900 group"
               >
                 {item.name}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
               </a>
             ))}
+            <a
+              href="https://github.com/HyeontaeKim0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-blue-600 px-4 py-1.5 font-display text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-blue-700"
+            >
+              GitHub
+            </a>
           </div>
 
           {/* Mobile Menu Button */}

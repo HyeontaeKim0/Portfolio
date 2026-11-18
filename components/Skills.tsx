@@ -27,6 +27,7 @@ import { SiJest } from "react-icons/si";
 import { SiTestinglibrary } from "react-icons/si";
 import { RiBearSmileLine } from "react-icons/ri";
 import { VscVscode } from "react-icons/vsc";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 interface Skill {
   name: string;
@@ -194,22 +195,19 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="min-h-screen py-20 px-4 sm:px-6 lg:px-8"
-      style={{ backgroundColor: "white" }}
+      className="py-28 px-4 sm:px-6 lg:px-8"
     >
-      <div className="max-w-2xl mx-auto" ref={ref}>
+      <div className="max-w-7xl mx-auto" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-blue-600">
-            기술 스택 및 도구
-          </h2>
-          <p className="text-white text-lg max-w-2xl mx-auto">
-            아래의 기술을 사용할 수 있습니다.
-          </p>
+          <SectionHeader
+            index="03"
+            title="Skills"
+            subtitle="실무와 프로젝트에서 사용한 기술과 도구입니다."
+          />
         </motion.div>
 
         {/* 카테고리 탭 */}
@@ -217,15 +215,15 @@ export default function Skills() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center mb-16"
+          className="mb-12 flex"
         >
-          <div className="inline-flex border border-gray-500 rounded-lg overflow-hidden bg-transparent">
+          <div className="inline-flex overflow-hidden rounded-full border border-gray-900/15 bg-white/70">
             <button
               onClick={() => setActiveCategory("")}
-              className={`px-8 py-3 text-sm font-medium transition-all duration-200 ${
+              className={`px-6 py-2.5 text-sm font-medium transition-all duration-200 ${
                 activeCategory === ""
-                  ? "bg-white text-gray-800"
-                  : "bg-transparent text-gray-400 hover:text-gray-300"
+                  ? "bg-gray-900 text-white"
+                  : "bg-transparent text-gray-500 hover:text-gray-900"
               }`}
             >
               전체
@@ -234,10 +232,10 @@ export default function Skills() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-8 py-3 text-sm font-medium transition-all duration-200 border-l border-gray-500 ${
+                className={`px-6 py-2.5 text-sm font-medium transition-all duration-200 border-l border-gray-900/10 ${
                   activeCategory === category
-                    ? "bg-white text-gray-800"
-                    : "bg-transparent text-gray-400 hover:text-gray-300"
+                    ? "bg-gray-900 text-white"
+                    : "bg-transparent text-gray-500 hover:text-gray-900"
                 }`}
               >
                 {category}
@@ -251,7 +249,7 @@ export default function Skills() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.4, delay: 0.4 }}
-          className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6  max-w-[2000px] w-full mx-auto justify-center"
+          className="grid grid-cols-3 gap-y-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 w-full"
         >
           {skills.map((skill, index) => {
             const isActive =
@@ -276,7 +274,7 @@ export default function Skills() {
                 }`}
               >
                 <div
-                  className="w-20 h-20 mb-3 flex items-center justify-center rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-200"
+                  className="w-20 h-20 mb-3 flex items-center justify-center rounded-lg ring-1 ring-gray-900/10 group-hover:scale-110 transition-transform duration-200"
                   style={{
                     backgroundColor: skill.bgColor,
                     color: skill.textColor,
@@ -294,7 +292,7 @@ export default function Skills() {
                     </span>
                   )}
                 </div>
-                <span className="text-xs text-gray-400 text-center leading-tight">
+                <span className="text-xs text-gray-600 text-center leading-tight">
                   {skill.name}
                 </span>
               </motion.div>

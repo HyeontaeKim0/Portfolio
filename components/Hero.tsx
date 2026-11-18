@@ -4,159 +4,146 @@ import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Phone } from "lucide-react";
 import Image from "next/image";
 import profile from "../assets/User.jpg";
+import { MiniBars, MiniLine } from "@/components/ui/MiniCharts";
+
+const line = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
 export default function Hero() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 lg:px-8"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-4 pb-24 pt-28 sm:px-6 lg:px-8"
     >
-      <motion.div
-        className="relative z-10 max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center py-24"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* 좌측: 텍스트 영역 */}
-        <div>
-          <motion.p
-            variants={itemVariants}
-            className="text-blue-500 font-semibold text-lg mb-3"
+      <div className="mx-auto w-full max-w-7xl">
+        <p className="mb-8 font-display text-sm font-medium uppercase tracking-[0.2em] text-blue-600">
+          Frontend Developer — Kim Hyeontae
+        </p>
+
+        {/* 큰 문구: 줄마다 들여쓰기를 엇갈리게 */}
+        <h1 className="font-display text-[13vw] font-bold uppercase leading-[0.95] tracking-tight text-gray-900 md:text-[8.5vw] xl:text-[7.5rem]">
+          <motion.span
+            className="block"
+            variants={line}
+            initial="hidden"
+            animate="visible"
+            custom={0}
           >
-            Frontend Developer
-          </motion.p>
-
-          <motion.h1
-            variants={itemVariants}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight"
+            Turning data
+          </motion.span>
+          <motion.span
+            className="block pl-[8%]"
+            variants={line}
+            initial="hidden"
+            animate="visible"
+            custom={1}
           >
-            안녕하세요,
-            <br />
-            <span className="text-blue-600">김현태</span>입니다.
-          </motion.h1>
+            <MiniBars className="mr-[0.2em]" />
+            into screens
+          </motion.span>
+          <motion.span
+            className="block"
+            variants={line}
+            initial="hidden"
+            animate="visible"
+            custom={2}
+          >
+            people decide on
+            <MiniLine className="ml-[0.2em]" />
+          </motion.span>
+        </h1>
 
-          <motion.div variants={itemVariants} className="space-y-3 mb-8 text-gray-600 text-base leading-relaxed">
-            <p>
-              저는 프론트엔드 개발자로서 사용자 경험을 최우선으로 생각하며,
-              아름답고 기능적인 웹 애플리케이션을 만드는 것을 좋아합니다.
-            </p>
-            <p>
-              React, Next.js, TypeScript 등의 기술 스택을 활용하여 현대적인
-              웹 애플리케이션을 개발하고 있습니다. 코드의 가독성과 재사용성을
-              중시하며, 지속적인 학습과 성장을 추구합니다.
-            </p>
-          </motion.div>
-
-          {/* 연락처 */}
-          <motion.div variants={itemVariants} className="flex flex-col gap-3 mb-8">
-            <a
-              href="mailto:cesc231@naver.com"
-              className="flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-colors duration-200 group w-fit"
-            >
-              <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-200">
-                <Mail size={18} className="text-blue-600" />
-              </div>
-              <span>cesc231@naver.com</span>
-            </a>
-            <a
-              href="tel:01052017704"
-              className="flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-colors duration-200 group w-fit"
-            >
-              <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-200">
-                <Phone size={18} className="text-blue-600" />
-              </div>
-              <span>010-5201-7704</span>
-            </a>
-          </motion.div>
-
-          {/* 소셜 링크 + CTA */}
-          <motion.div variants={itemVariants} className="flex items-center gap-4 flex-wrap">
-            <a
-              href="#projects"
-              className="px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200"
-            >
-              프로젝트 보기
-            </a>
-            <a
-              href="https://github.com/HyeontaeKim0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 border border-gray-300 rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors duration-200 text-gray-600"
-              aria-label="GitHub"
-            >
-              <Github size={20} />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/현태-김-8898062ab"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 border border-gray-300 rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors duration-200 text-gray-600"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={20} />
-            </a>
-          </motion.div>
-        </div>
-
-        {/* 우측: 프로필 이미지 */}
         <motion.div
-          variants={itemVariants}
-          className="flex justify-center md:justify-end"
+          className="mt-14 grid gap-10 border-t border-gray-900/15 pt-10 md:grid-cols-[1fr_auto] md:items-end"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
         >
-          <div className="relative">
-            <div className="w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-blue-100 shadow-xl">
+          <div className="flex gap-6">
+            <div className="relative hidden size-28 shrink-0 sm:block">
+              <span className="absolute inset-0 translate-x-2 translate-y-2 rounded-lg bg-blue-600" />
               <Image
                 src={profile}
                 alt="김현태 프로필"
-                width={320}
-                height={320}
-                className="object-cover w-full h-full"
+                width={112}
+                height={112}
+                className="relative size-28 rounded-lg object-cover"
               />
             </div>
-            <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-blue-500 rounded-full opacity-20" />
-            <div className="absolute -top-2 -left-2 w-12 h-12 bg-blue-300 rounded-full opacity-30" />
+            <div className="max-w-xl space-y-3 text-base leading-relaxed text-gray-700">
+              <p>
+                안녕하세요, <strong className="text-gray-900">김현태</strong>
+                입니다. 복잡한 데이터를 사람이 판단할 수 있는 화면으로
+                만드는 프론트엔드 개발자예요.
+              </p>
+              <p className="text-gray-600">
+                React · Next.js · TypeScript로 대시보드와 B2B 서비스를
+                만들어 왔고, 코드의 가독성과 재사용성을 중요하게 생각합니다.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 md:items-end">
+            <div className="flex flex-col gap-2 text-sm text-gray-700 md:items-end">
+              <a
+                href="mailto:cesc231@naver.com"
+                className="flex items-center gap-2 transition-colors hover:text-blue-600"
+              >
+                <Mail size={16} /> cesc231@naver.com
+              </a>
+              <a
+                href="tel:01052017704"
+                className="flex items-center gap-2 transition-colors hover:text-blue-600"
+              >
+                <Phone size={16} /> 010-5201-7704
+              </a>
+            </div>
+            <div className="flex items-center gap-3">
+              <a
+                href="#projects"
+                className="rounded-full bg-gray-900 px-5 py-2.5 font-display text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-blue-600"
+              >
+                View Projects
+              </a>
+              <a
+                href="https://github.com/HyeontaeKim0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-gray-900/20 p-2.5 text-gray-700 transition-colors hover:border-blue-600 hover:text-blue-600"
+                aria-label="GitHub"
+              >
+                <Github size={18} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/현태-김-8898062ab"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-gray-900/20 p-2.5 text-gray-700 transition-colors hover:border-blue-600 hover:text-blue-600"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={18} />
+              </a>
+            </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* 스크롤 유도 */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+      <motion.a
+        href="#about"
+        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center font-display text-xs uppercase tracking-widest text-gray-400 transition-colors hover:text-gray-700"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
+        animate={{ opacity: 1, y: [0, 8, 0] }}
+        transition={{ opacity: { delay: 1.4 }, y: { duration: 2, repeat: Infinity } }}
       >
-        <motion.a
-          href="#about"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <span className="text-sm mb-1">더 알아보기</span>
-          <ArrowDown size={20} />
-        </motion.a>
-      </motion.div>
+        Scroll
+        <ArrowDown size={16} className="mt-1" />
+      </motion.a>
     </section>
   );
 }

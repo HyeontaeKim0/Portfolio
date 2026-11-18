@@ -5,6 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 interface ProjectDetail {
   title: string;
@@ -450,6 +451,12 @@ const projects: Project[] = [
   },
 ];
 
+const FILTERS = [
+  { value: "all", label: "All" },
+  { value: "company", label: "Work" },
+  { value: "personal", label: "Side" },
+] as const;
+
 function KindBadge({ kind }: { kind?: Project["kind"] }) {
   if (!kind) return null;
   const isCompany = kind === "company";
@@ -522,6 +529,9 @@ export default function Projects() {
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
+  const [filter, setFilter] = useState<"all" | "company" | "personal">(
+    "all",
+  );
   const selectedProjectData =
     selectedProject !== null ? projects[selectedProject] : null;
   const selectedProjectGallery = selectedProjectData
@@ -532,25 +542,42 @@ export default function Projects() {
     <>
       <section
         id="projects"
-        className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"
+        className="py-28 px-4 sm:px-6 lg:px-8"
       >
         <div className="max-w-7xl mx-auto" ref={ref}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-blue-600">
-              프로젝트 상세
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto mt-4">
-              카드에 마우스를 올리면 시연 영상이, 누르면 상세 내용이 열립니다.
-            </p>
+            <SectionHeader
+              index="02"
+              title="Projects"
+              subtitle="카드에 마우스를 올리면 시연 영상이, 누르면 문제·해결·결과가 열립니다."
+            />
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* 필터 */}
+          <div className="mb-10 grid grid-cols-3 border-y border-gray-900/15 font-display text-sm font-medium uppercase tracking-wide">
+            {FILTERS.map((f, i) => (
+              <button
+                key={f.value}
+                type="button"
+                aria-pressed={filter === f.value}
+                onClick={() => setFilter(f.value)}
+                className={`flex items-center justify-between px-4 py-3 text-left transition-colors ${i > 0 ? "border-l border-gray-900/15" : ""} ${filter === f.value ? "text-gray-900" : "text-gray-400 hover:text-gray-700"}`}
+              >
+                {f.label}
+                <span
+                  className={`size-3 rounded-sm border ${filter === f.value ? "border-blue-600 bg-blue-600" : "border-gray-400"}`}
+                />
+              </button>
+            ))}
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2">
             {projects.map((project, index) => {
+              if (filter !== "all" && project.kind !== filter) return null;
               const thumbnail = getProjectThumbnail(project);
               const previewVideo = project.screenshots?.find(isVideo);
               const projectTechnologies = getProjectTechnologies(project);
@@ -563,7 +590,7 @@ export default function Projects() {
                     isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
                   }
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
+                  className="group relative flex cursor-pointer flex-col overflow-hidden rounded-lg border border-gray-900/10 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-blue-600"
                   onClick={() => setSelectedProject(index)}
                   onMouseEnter={(e) => {
                     const v = e.currentTarget.querySelector("video");
@@ -615,7 +642,7 @@ export default function Projects() {
                   <div className="flex flex-1 flex-col p-5">
                     <div className="mb-2 flex items-center gap-2">
                       <KindBadge kind={project.kind} />
-                      <h3 className="truncate text-lg font-bold text-gray-800 transition-colors group-hover:text-blue-600">
+                      <h3 className="truncate font-display text-xl font-bold uppercase tracking-tight text-gray-900 transition-colors group-hover:text-blue-600">
                         {project.title}
                       </h3>
                     </div>

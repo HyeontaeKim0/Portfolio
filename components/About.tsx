@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Briefcase, Code, Coffee, Heart, Rocket } from "lucide-react";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const interests = [
   {
@@ -109,19 +110,19 @@ export default function About() {
   return (
     <section
       id="about"
-      className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"
+      className="py-28 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-blue-600">
-            About Me
-          </h2>
-          <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          <SectionHeader
+            index="01"
+            title="About"
+            subtitle="무엇에 관심을 두고, 어디서 어떤 일을 해왔는지 정리했습니다."
+          />
         </motion.div>
 
         <motion.div
@@ -129,7 +130,7 @@ export default function About() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <h3 className="text-2xl font-bold mb-8 text-center">관심사</h3>
+          <h3 className="mb-6 font-display text-sm font-bold uppercase tracking-[0.2em] text-gray-500">Interests · 관심사</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {interests.map((interest, index) => {
               const Icon = interest.icon;
@@ -141,7 +142,7 @@ export default function About() {
                     isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
                   }
                   transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-                  className="p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-500 transition-colors duration-200 shadow-sm"
+                  className="p-6 bg-white/80 border border-gray-900/10 rounded-lg hover:border-blue-600 transition-colors duration-200"
                 >
                   <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
                     <Icon size={24} className="text-white" />
@@ -164,7 +165,7 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-20"
         >
-          <h3 className="text-2xl font-bold mb-12 text-center">경력</h3>
+          <h3 className="mb-8 font-display text-sm font-bold uppercase tracking-[0.2em] text-gray-500">Experience · 경력</h3>
           <div className="relative max-w-3xl mx-auto">
             {/* 타임라인 세로선 */}
             <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gray-200" />
@@ -204,7 +205,7 @@ export default function About() {
                     {career.projects.map((project) => (
                       <div
                         key={project.name}
-                        className="p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-500 transition-colors duration-200 shadow-sm"
+                        className="p-4 bg-white/80 border border-gray-900/10 rounded-lg hover:border-blue-600 transition-colors duration-200"
                       >
                         <h5 className="font-semibold text-gray-800 mb-1">
                           {project.name}
