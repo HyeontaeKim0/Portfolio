@@ -434,6 +434,71 @@ const projects: Project[] = [
     ],
   },
   {
+    title: "F1(포뮬러원) 대시보드",
+    kind: "personal",
+    highlights: [
+      "OpenF1 API 기반 대시보드",
+      "레이스 결과·순위·드라이버 차트",
+      "RSS 뉴스 연동",
+    ],
+    description:
+      "레이스 일정·결과·챔피언십 순위·뉴스·드라이버 정보를 한 화면에서 보는 대시보드형 웹앱",
+    technologies: [
+      { name: "Next.js", label: "Next.js 14 (App Router)" },
+      { name: "typescript", label: "TypeScript" },
+      { name: "React.js", label: "React 18" },
+      { name: "tailwind css", label: "Tailwind CSS" },
+      { name: "Recharts", label: "Recharts" },
+      { name: "lucide-react", label: "Lucide React" },
+      { name: "react-icons", label: "react-icons" },
+      { name: "rss-parser", label: "rss-parser" },
+      { name: "ESLint", label: "ESLint (eslint-config-next)" },
+    ],
+    details:
+      "포뮬러1 레이스 일정, 최근 경기 결과, 챔피언십 순위(드라이버·컨스트럭터), 최신 뉴스, 드라이버 정보를 한 곳에서 볼 수 있는 대시보드형 웹 애플리케이션입니다. 사용자가 여러 페이지를 헤매지 않고 시즌 흐름을 빠르게 파악하도록 하는 것을 목표로 합니다.",
+    participants: "1명 (개인 프로젝트 · 기획·설계·프론트엔드 전반)",
+    screenshots: [
+      "/projects/f1-dashboard-brand.png",
+      "/projects/f1-dashboard-home.png",
+    ],
+    liveUrl: "https://formula1-dashboard.vercel.app/",
+    galleryLayout: "vertical",
+    detailSections: [
+      {
+        title: "레이스·시즌 정보",
+        items: [
+          "다가오는 레이스 일정, 서킷·국가 플래그 등 시각 요소와 함께 일정 정보를 제공",
+          "최근 레이스 결과를 테이블·탭 등으로 확인할 수 있도록 구성",
+        ],
+      },
+      {
+        title: "순위·드라이버",
+        items: [
+          "드라이버·컨스트럭터 챔피언십 순위를 표시",
+          "홈에는 포디움·드라이버 카드 슬라이더 등 몰입감 있는 섹션을 두어 시즌 하이라이트를 강조",
+        ],
+      },
+      {
+        title: "뉴스",
+        items: [
+          "RSS를 활용해 F1 관련 최신 소식을 대시보드 내에서 확인할 수 있게 구성",
+        ],
+      },
+      {
+        title: "아키텍처·코드 구조",
+        items: [
+          "App Router 기준으로 app/ 라우팅과 components/ 단위 모듈(네비게이션, 레이스 일정·결과, 순위, 뉴스, 드라이버 등)로 역할을 나누어 유지보수와 확장이 쉬운 형태를 지향",
+        ],
+      },
+      {
+        title: "향후 계획 (README 기준)",
+        items: [
+          "다크 모드, 커뮤니티, 위젯 형태 개발 등 기능을 단계적으로 추가할 예정",
+        ],
+      },
+    ],
+  },
+  {
     title: "나의 포트폴리오 사이트",
     kind: "personal",
     description: "Next.js App router 활용하여 웹사이트 개발",

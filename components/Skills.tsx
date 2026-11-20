@@ -22,7 +22,9 @@ import {
   SiStyledcomponents,
   SiNestjs,
   SiAxios,
+  SiClaude,
 } from "react-icons/si";
+import { BsCursorFill } from "react-icons/bs";
 import { SiJest } from "react-icons/si";
 import { SiTestinglibrary } from "react-icons/si";
 import { RiBearSmileLine } from "react-icons/ri";
@@ -176,6 +178,21 @@ const skills: Skill[] = [
     textColor: "#FFFFFF",
     icon: SiVercel,
   },
+  // AI 도구
+  {
+    name: "Claude Code",
+    category: "AI 도구",
+    bgColor: "#D97757",
+    textColor: "#FFFFFF",
+    icon: SiClaude,
+  },
+  {
+    name: "Cursor",
+    category: "AI 도구",
+    bgColor: "#000000",
+    textColor: "#FFFFFF",
+    icon: BsCursorFill,
+  },
   {
     name: "Nest.js",
     category: "스터디",
@@ -185,7 +202,13 @@ const skills: Skill[] = [
   },
 ];
 
-const categories = ["프론트엔드", "라이브러리", "환경 및 배포", "스터디"];
+const categories = [
+  "프론트엔드",
+  "라이브러리",
+  "환경 및 배포",
+  "AI 도구",
+  "스터디",
+];
 
 export default function Skills() {
   const ref = useRef(null);
